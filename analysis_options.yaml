@@ -1,8 +1,19 @@
-include: package:flutter_lints/flutter.yaml
+include: package:surf_lint_rules/analysis_options.yaml
 
 analyzer:
+  errors:
+    flutter_style_todos: ignore
+    invalid_annotation_target: ignore
+    no_leading_underscores_for_local_identifiers: ignore
+    sort_pub_dependencies: ignore
   exclude:
     - build/**
     - android/**
     - ios/**
     - web/**
+    # Generated code
+    - 'lib/**.*.dart'
+    - 'lib/runner/firebase_options/**.dart'
+
+formatter:  
+  page_width: 120

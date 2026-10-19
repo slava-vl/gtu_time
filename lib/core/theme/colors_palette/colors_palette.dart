@@ -1,0 +1,111 @@
+import 'dart:ui';
+
+import 'package:gtu_time/core/theme/colors_palette/colors_palette_entity.dart';
+
+const lightColorsPalette = ColorsPalette(
+  brand: BrandColors(
+    primary: Color(0xFF_7650FF),
+    primaryHover: Color(0xFF_6840EC),
+    primaryPressed: Color(0xFF_5730D3),
+    deep: Color(0xFF_07001E),
+    accent: Color(0xFF_8A66FF),
+    selection: Color(0xFF_EBE6FF),
+  ),
+  background: BackgroundColors(base: Color(0xFF_F6F7FB), elevated: Color(0xFF_FFFFFF), overlay: Color(0x66_0B1020)),
+  surfaces: SurfacesColors(
+    primary: Color(0xFF_FFFFFF),
+    secondary: Color(0xFF_EEF0F8),
+    tertiary: Color(0xFF_F5F2FF),
+    glass: Color(0xE8_FFFFFF),
+    glassStrong: Color(0xF5_FFFFFF),
+    glassSubtle: Color(0xB8_FFFFFF),
+    selected: Color(0xFF_F5F2FF),
+    disabled: Color(0xFF_EEF0F8),
+  ),
+  text: TextColors(
+    primary: Color(0xFF_111827),
+    secondary: Color(0xFF_64748B),
+    tertiary: Color(0xFF_6B7280),
+    inverse: Color(0xFF_F8FAFC),
+    disabled: Color(0xFF_94A3B8),
+    onPrimary: Color(0xFF_FFFFFF),
+  ),
+  bordersAndLights: BordersAndLightsColors(
+    subtle: Color(0x80_E2E8F0),
+    defaultColor: Color(0xFF_E2E8F0),
+    strong: Color(0xFF_A7A7CB),
+    focus: Color(0xFF_7650FF),
+    highlight: Color(0xF2_FFFFFF),
+    shadow: Color(0x14_07001E),
+  ),
+  status: StatusColors(
+    current: Color(0xFF_7650FF),
+    upcoming: Color(0xFF_4F4E77),
+    completed: Color(0xFF_15803D),
+    cancelled: Color(0xFF_B45309),
+    success: Color(0xFF_16A34A),
+    warning: Color(0xFF_D97706),
+    error: Color(0xFF_DC2626),
+    info: Color(0xFF_2563EB),
+  ),
+  interactive: InteractiveColors(
+    hover: Color(0x0A_7650FF),
+    pressed: Color(0x14_7650FF),
+    focused: Color(0x24_7650FF),
+    disabled: Color(0x1F_94A3B8),
+  ),
+);
+
+const darkColorsPalette = ColorsPalette(
+  brand: BrandColors(
+    primary: Color(0xFF_A78BFA),
+    primaryHover: Color(0xFF_B8A0FB),
+    primaryPressed: Color(0xFF_C4B5FD),
+    deep: Color(0xFF_07001E),
+    accent: Color(0xFF_B199FF),
+    selection: Color(0xFF_332957),
+  ),
+  background: BackgroundColors(base: Color(0xFF_0B1020), elevated: Color(0xFF_1B2239), overlay: Color(0xB8_030712)),
+  surfaces: SurfacesColors(
+    primary: Color(0xFF_141A2E),
+    secondary: Color(0xFF_202842),
+    tertiary: Color(0xFF_26223D),
+    glass: Color(0xEB_1B2239),
+    glassStrong: Color(0xF5_202842),
+    glassSubtle: Color(0xB8_202842),
+    selected: Color(0xFF_292342),
+    disabled: Color(0xFF_202842),
+  ),
+  text: TextColors(
+    primary: Color(0xFF_F8FAFC),
+    secondary: Color(0xFF_A5B4CC),
+    tertiary: Color(0xFF_94A3B8),
+    inverse: Color(0xFF_111827),
+    disabled: Color(0xFF_66738D),
+    onPrimary: Color(0xFF_140A2E),
+  ),
+  bordersAndLights: BordersAndLightsColors(
+    subtle: Color(0x80_343D5B),
+    defaultColor: Color(0xFF_343D5B),
+    strong: Color(0xFF_7E7DA3),
+    focus: Color(0xFF_C4B5FD),
+    highlight: Color(0x24_FFFFFF),
+    shadow: Color(0x52_000000),
+  ),
+  status: StatusColors(
+    current: Color(0xFF_A78BFA),
+    upcoming: Color(0xFF_A7A7CB),
+    completed: Color(0xFF_4ADE80),
+    cancelled: Color(0xFF_FBBF24),
+    success: Color(0xFF_4ADE80),
+    warning: Color(0xFF_FBBF24),
+    error: Color(0xFF_F87171),
+    info: Color(0xFF_93C5FD),
+  ),
+  interactive: InteractiveColors(
+    hover: Color(0x14_A78BFA),
+    pressed: Color(0x24_A78BFA),
+    focused: Color(0x38_C4B5FD),
+    disabled: Color(0x14_94A3B8),
+  ),
+);
