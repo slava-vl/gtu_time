@@ -249,7 +249,7 @@ class _WeekDaysBar extends StatelessWidget {
                       spacing: spacings.s2,
                       children: [
                         Text(
-                          DateFormat.E().format(date)[0].toUpperCase(),
+                          DateFormat.EEEEE().format(date),
                           style: context.theme.textStyles.ag29.copyWith(
                             color: isSelected
                                 ? context.theme.colorsPalette.text.onPrimary

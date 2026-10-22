@@ -1,7 +1,7 @@
 name: gtu_time
 description: "A new Flutter project."
 publish_to: 'none'
-version: 0.1.0+1
+version: 0.1.5+1
 
 environment:
   sdk: ^3.13.4
@@ -50,6 +50,7 @@ dependencies:
   modal_bottom_sheet: ^3.0.0
   collection: ^1.19.1
   flutter_native_splash: ^2.4.8
+  package_info_plus: ^10.2.2
 
 dev_dependencies:
   flutter_test:

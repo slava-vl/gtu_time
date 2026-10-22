@@ -29,7 +29,7 @@ class SelectGroupPage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.fromLTRB(
                 context.theme.spacings.s16,
-                MediaQuery.paddingOf(context).top + context.theme.spacings.s16,
+                MediaQuery.paddingOf(context).top+context.theme.spacings.s2,
                 context.theme.spacings.s16,
                 context.theme.spacings.s16,
               ),

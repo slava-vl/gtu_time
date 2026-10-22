@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gtu_time/core/extension/extensions.dart';
+import 'package:gtu_time/core/resources/assets.gen.dart';
 import 'package:gtu_time/core/theme/radiuses.dart';
+import 'package:gtu_time/core/ui_kit/ui_kit.dart';
+import 'package:gtu_time/feature/settings/presentation/settings_bottom_sheet.dart';
 
 class TopBar extends StatelessWidget {
   const TopBar({super.key});
@@ -43,6 +46,12 @@ class TopBar extends StatelessWidget {
               ),
             ],
           ),
+        ),
+        PrimaryButton(
+          onTap: () => SettingsBottomSheet.show(context),
+          outerPadding: .all(context.theme.spacings.s12),
+          type: .secondary,
+          leftIcon: Assets.icons.settings20.svg(colorFilter: context.theme.colorsPalette.text.primary.filter),
         ),
       ],
     );

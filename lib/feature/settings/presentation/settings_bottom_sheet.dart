@@ -7,6 +7,7 @@ import 'package:gtu_time/feature/localization_control/domain/entity/locale_entit
 import 'package:gtu_time/feature/localization_control/presentation/localization_scope.dart';
 import 'package:gtu_time/feature/theme_control/domain/entity/current_theme.dart';
 import 'package:gtu_time/feature/theme_control/presentation/theme_control_scope.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsBottomSheet extends StatelessWidget {
   const SettingsBottomSheet._();
@@ -26,12 +27,16 @@ class SettingsBottomSheet extends StatelessWidget {
             padding: .symmetric(horizontal: context.theme.spacings.s4, vertical: context.theme.spacings.s8),
             child: Column(
               crossAxisAlignment: .start,
+              spacing: context.theme.spacings.s4,
               children: [
                 Text(
                   context.l10n.settings_title,
                   style: context.theme.textStyles.ag34.copyWith(color: context.theme.colorsPalette.text.primary),
                 ),
-                Text(context.l10n.settings_subtitle),
+                Text(
+                  context.l10n.settings_subtitle,
+                  style: context.theme.textStyles.ag23.copyWith(color: context.theme.colorsPalette.text.secondary),
+                ),
               ],
             ),
           ),
@@ -144,6 +149,24 @@ class SettingsBottomSheet extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+          SizedBox(height: context.theme.spacings.s12),
+          Center(
+            child: FutureBuilder(
+              future: PackageInfo.fromPlatform(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  final data = snapshot.data;
+                  if (data != null) {
+                    return Text(
+                      'version: ${data.version}',
+                      style: context.theme.textStyles.ag18.copyWith(color: context.theme.colorsPalette.text.secondary),
+                    );
+                  }
+                }
+                return SizedBox.shrink();
+              },
             ),
           ),
           SizedBox(height: MediaQuery.paddingOf(context).bottom + context.theme.spacings.s16),
