@@ -26,8 +26,10 @@
   "computer_science": "Компьютерные науки",
   "subgroup_label": "Подгруппа: {subgroup}",
   "subgroup_all": "Подгруппа: Все",
-  "classes_count": "Пар: {count}",
-  "free_period": "Окно · {hours} ч {minutes} мин",
+  "classes_count": "{count, plural, =0{0 пар} one{{count} пара} few{{count} пары} other{{count} пар}}",
+  "free_period": "Окно",
+  "hours_count": "{count, plural, one{{count} час} few{{count} часа} other{{count} часов}}",
+  "minutes_count": "{count, plural, one{{count} минута} few{{count} минуты} other{{count} минут}}",
   "day_without_classes_title": "День без занятий",
   "day_without_classes_description": "На этот день занятия не запланированы. Выберите другую дату или вернитесь к сегодняшнему дню.",
   "browse_another_day": "Выбрать другой день",
@@ -46,5 +48,11 @@
   "theme_system": "Системная",
   "theme_light": "Светлая",
   "theme_dark": "Тёмная",
-  "language_title": "Язык"
+  "language_title": "Язык",
+  "close": "Закрыть",
+  "degree_bachelor": "Бакалавриат",
+  "degree_master": "Магистратура",
+  "degree_doctor": "Докторантура",
+  "degree_vocational": "Профессиональное образование",
+  "degree_preparatory_course": "Курс подготовки по грузинскому языку"
 }

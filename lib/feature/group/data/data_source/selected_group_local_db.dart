@@ -1,10 +1,11 @@
+import 'package:gtu_time/feature/group/domain/entity/group.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract interface class ISelectedGroupLocalDB {
-  String? read();
+  Group? read();
   String? readSub();
-  Future<void> change(String newValue);
+  Future<void> change(Group newValue);
   Future<void> changeSub(String? newValue);
 }
 
@@ -17,7 +18,7 @@ final class SelectedGroupLocalDB implements ISelectedGroupLocalDB {
   const SelectedGroupLocalDB(this._preferences);
 
   @override
-  Future<void> change(String newValue) => _preferences.setString(_selectedGroupKey, newValue);
+  Future<void> change(Group newValue) => _preferences.setString(_selectedGroupKey, newValue.toJson());
 
   @override
   Future<void> changeSub(String? newValue) => newValue == null
@@ -25,7 +26,11 @@ final class SelectedGroupLocalDB implements ISelectedGroupLocalDB {
       : _preferences.setString(_selectedSubgroupKey, newValue);
 
   @override
-  String? read() => _preferences.getString(_selectedGroupKey);
+  Group? read() {
+    final res = _preferences.getString(_selectedGroupKey);
+    if (res == null) return null;
+    return Group.fromJson(res);
+  }
 
   @override
   String? readSub() => _preferences.getString(_selectedSubgroupKey);

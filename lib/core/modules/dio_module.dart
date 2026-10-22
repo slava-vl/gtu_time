@@ -6,7 +6,13 @@ import 'package:injectable/injectable.dart';
 abstract class DioModule {
   @lazySingleton
   Dio get clearDio {
-    final dio = Dio(BaseOptions(baseUrl: 'https://gtu-timetable.vercel.app/api/', receiveTimeout: const Duration(seconds: 35)));
+    final dio = Dio(
+      BaseOptions(
+        baseUrl: 'https://gtu-timetable.vercel.app/api/',
+        receiveTimeout: const Duration(seconds: 15),
+        connectTimeout: const Duration(seconds: 15),
+      ),
+    );
     dio.interceptors.addAll([if (!kIsWeb) LogInterceptor(requestBody: true, responseBody: true)]);
     return dio;
   }

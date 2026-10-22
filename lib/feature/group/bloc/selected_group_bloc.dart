@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:gtu_time/feature/group/domain/entity/group.dart';
 import 'package:gtu_time/feature/group/domain/repository/i_selected_group_repository.dart';
 
 part 'selected_group_bloc.freezed.dart';
@@ -11,12 +12,12 @@ part 'selected_group_bloc.freezed.dart';
 sealed class SelectedGroupEvent with _$SelectedGroupEvent {
   const SelectedGroupEvent._();
 
-  const factory SelectedGroupEvent.change(String newValue) = _ChangeEvent;
+  const factory SelectedGroupEvent.change(Group newValue) = _ChangeEvent;
   const factory SelectedGroupEvent.changeSubgroup(String newValue) = _ChangeSubgroupEvent;
 }
 
 class SelectedGroupState extends Equatable {
-  final String? selectedGroup;
+  final Group? selectedGroup;
   final String? selectedSubgroup;
   const SelectedGroupState({this.selectedGroup, this.selectedSubgroup});
 

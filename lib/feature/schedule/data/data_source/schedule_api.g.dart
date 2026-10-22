@@ -21,7 +21,7 @@ class _ScheduleApi implements ScheduleApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ScheduleResponse> getSchedule() async {
+  Future<ScheduleResponse> getGroupSchedule(dynamic group) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -30,7 +30,7 @@ class _ScheduleApi implements ScheduleApi {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'schedule',
+            'schedule?group=${group}&semester=1&week=0',
             queryParameters: queryParameters,
             data: _data,
           )

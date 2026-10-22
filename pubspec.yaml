@@ -49,6 +49,7 @@ dependencies:
   material_ui: ^1.0.1
   modal_bottom_sheet: ^3.0.0
   collection: ^1.19.1
+  flutter_native_splash: ^2.4.8
 
 dev_dependencies:
   flutter_test:
@@ -65,6 +66,8 @@ dev_dependencies:
   json_serializable: 
 
   surf_lint_rules: ^4.0.0
+
+  flutter_launcher_icons: ^0.14.4
 
 flutter_gen:
   output: lib/core/resources

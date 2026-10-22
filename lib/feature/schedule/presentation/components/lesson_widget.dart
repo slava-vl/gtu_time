@@ -16,17 +16,60 @@ class LessonWidget extends StatefulWidget {
   State<LessonWidget> createState() => _LessonWidgetState();
 }
 
-class _LessonWidgetState extends State<LessonWidget> {
-  late final DateTime start;
-  late final DateTime end;
-  late final int lessonDuration;
+class _LessonWidgetState extends State<LessonWidget> with WidgetsBindingObserver {
+  late DateTime start;
+  late DateTime end;
+  late int lessonDuration;
 
   int difference = 0;
   bool isInProgress = false;
   Timer? _timer;
+
   @override
   void initState() {
-    final currentWeekStart = DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1)).dateOnly;
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _refresh(notify: false);
+  }
+
+  @override
+  void didUpdateWidget(covariant LessonWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.lesson != widget.lesson || oldWidget.weekday != widget.weekday) {
+      _refresh();
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _refresh();
+    }
+  }
+
+  /// Пересчитывает время пары, статус и перезапускает таймеры.
+  void _refresh({bool notify = true}) {
+    _timer?.cancel();
+    _timer = null;
+
+    _calculateRange();
+    _checkIsInProgress(notify: notify);
+
+    if (isInProgress) {
+      _timer = Timer.periodic(const Duration(seconds: 1), (_) => _checkIsInProgress());
+    } else if (start.dateOnly == DateTime.now().dateOnly && start.isAfter(DateTime.now())) {
+      // Пара сегодня, но ещё не началась — ждём начала и запускаем секундный таймер
+      _timer = Timer(start.difference(DateTime.now()), () {
+        _timer?.cancel();
+        _timer = Timer.periodic(const Duration(seconds: 1), (_) => _checkIsInProgress());
+        _checkIsInProgress();
+      });
+    }
+  }
+
+  void _calculateRange() {
+    final now = DateTime.now();
+    final currentWeekStart = now.subtract(Duration(days: now.weekday - 1)).dateOnly;
     start = currentWeekStart.add(
       Duration(
         days: widget.weekday - 1,
@@ -36,32 +79,23 @@ class _LessonWidgetState extends State<LessonWidget> {
     );
     end = start.add(Duration(hours: widget.lesson.slots));
     lessonDuration = 60 * widget.lesson.slots;
-    _checkIsInProgress();
-    if (isInProgress) {
-      _timer = Timer.periodic(Duration(seconds: 1), (_) => _checkIsInProgress());
-    } else {
-      if (start.dateOnly == DateTime.now().dateOnly && start.isAfter(DateTime.now())) {
-        _timer = Timer(Duration(seconds: start.difference(DateTime.now()).inSeconds), () {
-          _timer?.cancel();
-          _timer = Timer.periodic(Duration(seconds: 1), (_) => _checkIsInProgress());
-        });
-      }
-    }
-    super.initState();
   }
 
-  void _checkIsInProgress() {
-    isInProgress = DateTime.now().betweenOrEqualTo(start, end);
+  void _checkIsInProgress({bool notify = true}) {
+    final now = DateTime.now();
+    isInProgress = now.betweenOrEqualTo(start, end);
     if (!isInProgress) {
       _timer?.cancel();
+      _timer = null;
     } else {
-      difference = DateTime.now().difference(start).inMinutes.clamp(0, lessonDuration);
+      difference = now.difference(start).inMinutes.clamp(0, lessonDuration);
     }
-    setState(() {});
+    if (notify && mounted) setState(() {});
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _timer?.cancel();
     super.dispose();
   }
@@ -163,7 +197,7 @@ class _LessonWidgetState extends State<LessonWidget> {
                           ],
                         ),
                         Text(
-                          context.l10n.room_and_building(item.room.split('-').last, item.room.split('-').first),
+                          context.l10n.room_and_building(item.room.split('-').first, item.room.split('-').last),
                           style: context.theme.textStyles.ag18.copyWith(
                             color: context.theme.colorsPalette.text.secondary,
                           ),

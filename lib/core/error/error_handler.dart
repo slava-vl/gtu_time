@@ -150,5 +150,11 @@ class _UnknownError extends ErrorHandler {
 }
 
 extension ObjectExtension on Object {
-  IErrorHandler toHandler() => ErrorHandler.fromError(this);
+  IErrorHandler toHandler() {
+    final errH = ErrorHandler.fromError(this);
+    debugPrint(errH.toString());
+    debugPrint(toString());
+
+    return errH;
+  }
 }

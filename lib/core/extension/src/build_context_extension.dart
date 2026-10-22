@@ -28,4 +28,23 @@ extension BuildContextExtension on BuildContext {
   /// ```
   void popUntilAndPush(String popUntilPath, String pushLocation, {Object? extra}) =>
       GoRouter.of(this).popUntilAndPush(popUntilPath, pushLocation, extra: extra);
+
+  String formatFreePeriod(Duration duration) {
+    final hours = duration.inHours;
+    final minutes = duration.inMinutes % 60;
+
+    final parts = <String>[];
+
+    if (hours > 0) {
+      parts.add(l10n.hours_count(hours));
+    }
+
+    if (minutes > 0 || hours == 0) {
+      parts.add(l10n.minutes_count(minutes));
+    }
+
+    final durationString = parts.join(' ');
+
+    return '${l10n.free_period} · $durationString';
+  }
 }

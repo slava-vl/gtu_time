@@ -36,6 +36,8 @@ class Selector extends StatelessWidget {
                         ? context.theme.colorsPalette.text.disabled
                         : context.theme.colorsPalette.text.primary,
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               Assets.icons.chevronDown18.svg(

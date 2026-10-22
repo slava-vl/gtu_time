@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:gtu_time/core/extension/extensions.dart';
 import 'package:gtu_time/feature/schedule/data/data_source/schedule_api.dart';
 import 'package:gtu_time/feature/schedule/data/data_source/schedule_local_db.dart';
@@ -6,30 +8,27 @@ import 'package:gtu_time/feature/schedule/domain/repository/i_schedule_repositor
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
-@Singleton(as: IScheduleRepository)
+@Injectable(as: IScheduleRepository)
 final class ScheduleRepository implements IScheduleRepository {
   final ScheduleApi _api;
   final IScheduleLocalDb _localDB;
-  final BehaviorSubject<ScheduleResponse?> _scheduleSubject;
-  final BehaviorSubject<DateTime?> _lastUpdateSubject;
+  late final BehaviorSubject<ScheduleResponse?> _scheduleSubject;
+  late final BehaviorSubject<DateTime?> _lastUpdateSubject;
 
   Future<void>? _updateFuture;
+  final String group;
 
-  ScheduleRepository._(this._api, this._localDB, {ScheduleResponse? schedule, DateTime? lastUpdate})
-    : _scheduleSubject = BehaviorSubject<ScheduleResponse?>.seeded(schedule),
-      _lastUpdateSubject = BehaviorSubject<DateTime?>.seeded(lastUpdate) {
+  ScheduleRepository(this._api, this._localDB, this.group);
+
+  Future<void> init() async {
+    final (schedule, lastUpdate) = (await _localDB.read()) ?? (null, null);
+    _scheduleSubject = BehaviorSubject<ScheduleResponse?>.seeded(schedule);
+    _lastUpdateSubject = BehaviorSubject<DateTime?>.seeded(lastUpdate);
     if (lastUpdate == null) return;
     final diff = DateTime.now().dateOnly.difference(lastUpdate.dateOnly).inSeconds;
     if (diff > 0) {
-      updateSchedule();
+      unawaited(updateSchedule());
     }
-  }
-
-  @FactoryMethod(preResolve: true)
-  static Future<ScheduleRepository> init(ScheduleApi api, IScheduleLocalDb localDB) async {
-    final (schedule, lastUpdate) = (await localDB.read()) ?? (null, null);
-
-    return ScheduleRepository._(api, localDB, schedule: schedule, lastUpdate: lastUpdate);
   }
 
   @override
@@ -50,7 +49,7 @@ final class ScheduleRepository implements IScheduleRepository {
   });
 
   Future<void> _update() async {
-    final res = await _api.getSchedule();
+    final res = await _api.getGroupSchedule(group);
     final date = DateTime.now();
 
     _scheduleSubject.add(res);

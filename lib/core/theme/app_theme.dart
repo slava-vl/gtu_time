@@ -24,7 +24,10 @@ ThemeData _getTheme(AppThemeExtension themeExtention, ThemeData baseTheme, {bool
       brightness: isDark ? Brightness.dark : Brightness.light,
       surface: themeExtention.colorsPalette.surfaces.primary,
     ),
-    progressIndicatorTheme: ProgressIndicatorThemeData(color: themeExtention.colorsPalette.brand.primary),
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: themeExtention.colorsPalette.brand.primary,
+      linearTrackColor: themeExtention.colorsPalette.brand.selection,
+    ),
   );
 
   return baseTheme.copyWith(textTheme: baseTheme.textTheme.apply(fontFamily: FontFamily.inter));

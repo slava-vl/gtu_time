@@ -35,8 +35,7 @@ sealed class ScheduleState with _$ScheduleState {
 }
 
 class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
-  ScheduleBloc(this._repository)
-    : super(ScheduleState.progress(schedule: _repository.schedule, lastUpdate: _repository.lastUpdate)) {
+  ScheduleBloc(this._repository) : super(ScheduleState.progress()) {
     on<ScheduleEvent>(
       (event, emit) => event.map(
         init: (event) => _onInit(event, emit),
@@ -45,13 +44,6 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
         updateLastUpdate: (event) => emit(state.copyWith(lastUpdate: event.lastUpdate)),
       ),
     );
-
-    _scheduleSubscription = _repository.scheduleStream.listen(
-      (schedule) => schedule == null ? null : add(ScheduleEvent.updateSchedule(schedule)),
-    );
-    _lastUpdateSubscription = _repository.lastUpdateStream.listen(
-      (lastUpdate) => lastUpdate == null ? null : add(ScheduleEvent.updateLastUpdate(lastUpdate)),
-    );
   }
 
   final IScheduleRepository _repository;
@@ -59,6 +51,13 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
   late final StreamSubscription<DateTime?> _lastUpdateSubscription;
 
   Future<void> _onInit(_InitEvent event, Emitter<ScheduleState> emit) async {
+    await _repository.init();
+    _scheduleSubscription = _repository.scheduleStream.listen(
+      (schedule) => schedule == null ? null : add(ScheduleEvent.updateSchedule(schedule)),
+    );
+    _lastUpdateSubscription = _repository.lastUpdateStream.listen(
+      (lastUpdate) => lastUpdate == null ? null : add(ScheduleEvent.updateLastUpdate(lastUpdate)),
+    );
     if (state.schedule == null || state.lastUpdate == null) {
       add(ScheduleEvent.refresh());
     } else {

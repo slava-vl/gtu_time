@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:gtu_time/core/extension/extensions.dart';
 import 'package:gtu_time/core/theme/radiuses.dart';
 import 'package:gtu_time/core/ui_kit/src/primary_checkbox.dart';
+import 'package:gtu_time/feature/group/domain/entity/group.dart';
 import 'package:shimmer/shimmer.dart';
 
 abstract class GroupTile extends StatelessWidget {
   const GroupTile({super.key});
 
   factory GroupTile.loading() => _LoadingGroupTile();
-  factory GroupTile.value({required String group, required bool isSelected, required VoidCallback onTap}) =>
+  factory GroupTile.value({required Group group, required bool isSelected, required VoidCallback onTap}) =>
       _ValueGroupTile(group, onTap, isSelected: isSelected);
 }
 
 class _ValueGroupTile extends GroupTile {
-  final String group;
+  final Group group;
   final bool isSelected;
   final VoidCallback onTap;
   const _ValueGroupTile(this.group, this.onTap, {required this.isSelected});
@@ -56,15 +57,15 @@ class _ValueGroupTile extends GroupTile {
                     crossAxisAlignment: .start,
                     children: [
                       Text(
-                        group,
+                        group.number,
                         style: context.theme.textStyles.ag35.copyWith(color: context.theme.colorsPalette.text.primary),
                       ),
                       Text(
-                        context.l10n.computer_science,
+                        group.faculty,
                         style: context.theme.textStyles.ag23.copyWith(color: context.theme.colorsPalette.text.primary),
                       ),
                       Text(
-                        'Bachelor · Year 3 · English',
+                        '${group.level.localize(context)} · ${group.language}',
                         style: context.theme.textStyles.ag18.copyWith(
                           color: context.theme.colorsPalette.text.secondary,
                         ),

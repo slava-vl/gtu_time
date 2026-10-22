@@ -6,8 +6,25 @@ import 'package:gtu_time/core/ui_kit/ui_kit.dart';
 
 class ErrorCard extends StatelessWidget {
   final IErrorHandler error;
-  final VoidCallback onTap;
-  const new({required this.error, required this.onTap, super.key});
+  final List<Widget> Function(BuildContext context) actionsBuilder;
+  const new({required this.error, required this.actionsBuilder, super.key});
+
+  static void show(
+    BuildContext context, {
+    required IErrorHandler error,
+    required List<Widget> Function(BuildContext context) actionsBuilder,
+  }) => PrimaryBottomSheet.show(
+    context: context,
+    builder: (context) => Padding(
+      padding: .only(
+        top: context.theme.spacings.s16,
+        left: context.theme.spacings.s16,
+        right: context.theme.spacings.s16,
+        bottom: context.theme.spacings.s16 + MediaQuery.paddingOf(context).bottom,
+      ),
+      child: _ErrorCardBody(error: error, actionsBuilder: actionsBuilder, crossAxisAlignment: .center),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -18,31 +35,48 @@ class ErrorCard extends StatelessWidget {
         border: .all(color: context.theme.colorsPalette.bordersAndLights.defaultColor),
       ),
       padding: .all(context.theme.spacings.s24),
-      child: Column(
-        spacing: context.theme.spacings.s16,
-        crossAxisAlignment: .start,
-        children: [
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              color: context.theme.colorsPalette.surfaces.secondary,
-              borderRadius: context.theme.radiuses.s18.circular,
-            ),
-            alignment: .center,
-            child: error.iconFromError().svg(colorFilter: context.theme.colorsPalette.status.error.filter),
+      child: _ErrorCardBody(error: error, actionsBuilder: actionsBuilder),
+    );
+  }
+}
+
+class _ErrorCardBody extends StatelessWidget {
+  const _ErrorCardBody({required this.error, required this.actionsBuilder, this.crossAxisAlignment = .start});
+
+  final IErrorHandler error;
+  final CrossAxisAlignment crossAxisAlignment;
+  final List<Widget> Function(BuildContext context) actionsBuilder;
+
+  @override
+  Widget build(BuildContext context) {
+    final textAlign = crossAxisAlignment == .start ? TextAlign.start : TextAlign.center;
+    return Column(
+      spacing: context.theme.spacings.s16,
+      crossAxisAlignment: crossAxisAlignment,
+      mainAxisSize: .min,
+      children: [
+        Container(
+          width: 56,
+          height: 56,
+          decoration: BoxDecoration(
+            color: context.theme.colorsPalette.surfaces.secondary,
+            borderRadius: context.theme.radiuses.s18.circular,
           ),
-          Text(
-            error.messageFromError(context),
-            style: context.theme.textStyles.ag21.copyWith(color: context.theme.colorsPalette.text.primary),
-          ),
-          Text(
-            error.descriptionFromError(context),
-            style: context.theme.textStyles.ag23.copyWith(color: context.theme.colorsPalette.text.secondary),
-          ),
-          PrimaryButton(onTap: onTap, title: context.l10n.try_again, alignment: .center),
-        ],
-      ),
+          alignment: .center,
+          child: error.iconFromError().svg(colorFilter: context.theme.colorsPalette.status.error.filter),
+        ),
+        Text(
+          error.messageFromError(context),
+          style: context.theme.textStyles.ag21.copyWith(color: context.theme.colorsPalette.text.primary),
+          textAlign: textAlign,
+        ),
+        Text(
+          error.descriptionFromError(context),
+          style: context.theme.textStyles.ag23.copyWith(color: context.theme.colorsPalette.text.secondary),
+          textAlign: textAlign,
+        ),
+        ...actionsBuilder(context),
+      ],
     );
   }
 }

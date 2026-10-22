@@ -26,8 +26,10 @@
   "computer_science": "კომპიუტერული მეცნიერება",
   "subgroup_label": "ქვეჯგუფი: {subgroup}",
   "subgroup_all": "ქვეჯგუფი: ყველა",
-  "classes_count": "{count} ლექცია",
-  "free_period": "თავისუფალი პერიოდი · {hours} საათი {minutes} წუთი",
+  "classes_count": "{count, plural, =0{0 ლექცია} =1{1 ლექცია} other{{count} ლექცია}}",
+  "free_period": "თავისუფალი პერიოდი",
+  "hours_count": "{count} საათი",
+  "minutes_count": "{count} წუთი",
   "day_without_classes_title": "ლექციები არ არის",
   "day_without_classes_description": "ამ დღისთვის ლექციები დაგეგმილი არ არის. გადადით სხვა თარიღზე.",
   "browse_another_day": "სხვა დღის ნახვა",
@@ -46,5 +48,11 @@
   "theme_system": "სისტემური",
   "theme_light": "ნათელი",
   "theme_dark": "მუქი",
-  "language_title": "ენა"
+  "language_title": "ენა",
+  "close": "დახურვა",
+  "degree_bachelor": "ბაკალავრიატი",
+  "degree_master": "მაგისტრატურა",
+  "degree_doctor": "დოქტორანტურა",
+  "degree_vocational": "პროფესიული განათლება",
+  "degree_preparatory_course": "ქართული ენის მომზადების კურსი"
 }

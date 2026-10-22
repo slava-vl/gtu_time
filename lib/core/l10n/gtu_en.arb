@@ -26,8 +26,10 @@
   "computer_science": "Computer Science",
   "subgroup_label": "Subgroup: {subgroup}",
   "subgroup_all": "Subgroup: All",
-  "classes_count": "{count} classes",
-  "free_period": "Free period · {hours} hour {minutes} minute",
+  "classes_count": "{count, plural, =0{0 classes} =1{1 class} other{{count} classes}}",
+  "free_period": "Free period",
+  "hours_count": "{count, plural, =1{1 hour} other{{count} hours}}",
+  "minutes_count": "{count, plural, =1{1 minute} other{{count} minutes}}",
   "day_without_classes_title": "A day without classes",
   "day_without_classes_description": "There are no classes scheduled for this day. Browse another date or return to today.",
   "browse_another_day": "Browse another day",
@@ -46,5 +48,11 @@
   "theme_system": "System",
   "theme_light": "Light",
   "theme_dark": "Dark",
-  "language_title": "Language"
+  "language_title": "Language",
+  "close": "Close",
+  "degree_bachelor": "Bachelor's degree",
+  "degree_master": "Master's degree",
+  "degree_doctor": "Doctoral degree",
+  "degree_vocational": "Vocational education",
+  "degree_preparatory_course": "Georgian language preparatory course"
 }

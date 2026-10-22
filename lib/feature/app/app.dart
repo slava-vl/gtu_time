@@ -6,7 +6,6 @@ import 'package:gtu_time/core/services/service_locator/service_locator.dart';
 import 'package:gtu_time/core/theme/app_theme.dart';
 import 'package:gtu_time/feature/group/presentation/selected_group_scope.dart';
 import 'package:gtu_time/feature/localization_control/presentation/localization_scope.dart';
-import 'package:gtu_time/feature/schedule/presentation/schedule_main_scope.dart';
 import 'package:gtu_time/feature/theme_control/presentation/theme_control_scope.dart';
 import 'package:nested/nested.dart';
 
@@ -16,7 +15,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Nested(
-      children: const [LocalizationScope(), ThemeControlScope(), ScheduleMainScope(), SelectedGroupScope()],
+      children: const [LocalizationScope(), ThemeControlScope(), SelectedGroupScope()],
       child: _MaterialApp(),
     );
   }

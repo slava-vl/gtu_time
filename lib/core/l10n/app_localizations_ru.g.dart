@@ -96,13 +96,43 @@ class AppLocalizationsRu extends AppLocalizations {
   String get subgroup_all => 'Подгруппа: Все';
 
   @override
-  String classes_count(Object count) {
-    return 'Пар: $count';
+  String classes_count(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count пар',
+      few: '$count пары',
+      one: '$count пара',
+      zero: '0 пар',
+    );
+    return '$_temp0';
   }
 
   @override
-  String free_period(Object hours, Object minutes) {
-    return 'Окно · $hours ч $minutes мин';
+  String get free_period => 'Окно';
+
+  @override
+  String hours_count(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count часов',
+      few: '$count часа',
+      one: '$count час',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String minutes_count(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count минут',
+      few: '$count минуты',
+      one: '$count минута',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -172,4 +202,22 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get language_title => 'Язык';
+
+  @override
+  String get close => 'Закрыть';
+
+  @override
+  String get degree_bachelor => 'Бакалавриат';
+
+  @override
+  String get degree_master => 'Магистратура';
+
+  @override
+  String get degree_doctor => 'Докторантура';
+
+  @override
+  String get degree_vocational => 'Профессиональное образование';
+
+  @override
+  String get degree_preparatory_course => 'Курс подготовки по грузинскому языку';
 }

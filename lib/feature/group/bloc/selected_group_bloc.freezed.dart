@@ -15,26 +15,21 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SelectedGroupEvent {
 
- String get newValue;
-/// Create a copy of SelectedGroupEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$SelectedGroupEventCopyWith<SelectedGroupEvent> get copyWith => _$SelectedGroupEventCopyWithImpl<SelectedGroupEvent>(this as SelectedGroupEvent, _$identity);
+ Object get newValue;
 
 
 
 @override
 bool operator ==(Object other) {
   final _this = this as SelectedGroupEvent;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SelectedGroupEvent&&(identical(other.newValue, _this.newValue) || other.newValue == _this.newValue));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SelectedGroupEvent&&const DeepCollectionEquality().equals(other.newValue, _this.newValue));
 }
 
 
 @override
 int get hashCode {
   final _this = this as SelectedGroupEvent;
-  return Object.hash(runtimeType,_this.newValue);
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.newValue));
 }
 
 @override
@@ -47,34 +42,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $SelectedGroupEventCopyWith<$Res>  {
-  factory $SelectedGroupEventCopyWith(SelectedGroupEvent value, $Res Function(SelectedGroupEvent) _then) = _$SelectedGroupEventCopyWithImpl;
-@useResult
-$Res call({
- String newValue
-});
-
-
-
-
-}
-/// @nodoc
-class _$SelectedGroupEventCopyWithImpl<$Res>
-    implements $SelectedGroupEventCopyWith<$Res> {
-  _$SelectedGroupEventCopyWithImpl(this._self, this._then);
-
-  final SelectedGroupEvent _self;
-  final $Res Function(SelectedGroupEvent) _then;
-
-/// Create a copy of SelectedGroupEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? newValue = null,}) {
-  return _then(_self.copyWith(
-newValue: null == newValue ? _self.newValue : newValue // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
+class $SelectedGroupEventCopyWith<$Res>  {
+$SelectedGroupEventCopyWith(SelectedGroupEvent _, $Res Function(SelectedGroupEvent) __);
 }
 
 
@@ -156,7 +125,7 @@ return changeSubgroup(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String newValue)?  change,TResult Function( String newValue)?  changeSubgroup,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Group newValue)?  change,TResult Function( String newValue)?  changeSubgroup,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChangeEvent() when change != null:
 return change(_that.newValue);case _ChangeSubgroupEvent() when changeSubgroup != null:
@@ -178,7 +147,7 @@ return changeSubgroup(_that.newValue);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String newValue)  change,required TResult Function( String newValue)  changeSubgroup,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Group newValue)  change,required TResult Function( String newValue)  changeSubgroup,}) {final _that = this;
 switch (_that) {
 case _ChangeEvent():
 return change(_that.newValue);case _ChangeSubgroupEvent():
@@ -196,7 +165,7 @@ return changeSubgroup(_that.newValue);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String newValue)?  change,TResult? Function( String newValue)?  changeSubgroup,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Group newValue)?  change,TResult? Function( String newValue)?  changeSubgroup,}) {final _that = this;
 switch (_that) {
 case _ChangeEvent() when change != null:
 return change(_that.newValue);case _ChangeSubgroupEvent() when changeSubgroup != null:
@@ -215,11 +184,11 @@ class _ChangeEvent extends SelectedGroupEvent {
   const _ChangeEvent(this.newValue): super._();
   
 
-@override final  String newValue;
+@override final  Group newValue;
 
 /// Create a copy of SelectedGroupEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
+@JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 _$ChangeEventCopyWith<_ChangeEvent> get copyWith => __$ChangeEventCopyWithImpl<_ChangeEvent>(this, _$identity);
 
@@ -247,9 +216,9 @@ String toString() {
 /// @nodoc
 abstract mixin class _$ChangeEventCopyWith<$Res> implements $SelectedGroupEventCopyWith<$Res> {
   factory _$ChangeEventCopyWith(_ChangeEvent value, $Res Function(_ChangeEvent) _then) = __$ChangeEventCopyWithImpl;
-@override @useResult
+@useResult
 $Res call({
- String newValue
+ Group newValue
 });
 
 
@@ -266,10 +235,10 @@ class __$ChangeEventCopyWithImpl<$Res>
 
 /// Create a copy of SelectedGroupEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? newValue = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? newValue = null,}) {
   return _then(_ChangeEvent(
 null == newValue ? _self.newValue : newValue // ignore: cast_nullable_to_non_nullable
-as String,
+as Group,
   ));
 }
 
@@ -287,7 +256,7 @@ class _ChangeSubgroupEvent extends SelectedGroupEvent {
 
 /// Create a copy of SelectedGroupEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
+@JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 _$ChangeSubgroupEventCopyWith<_ChangeSubgroupEvent> get copyWith => __$ChangeSubgroupEventCopyWithImpl<_ChangeSubgroupEvent>(this, _$identity);
 
@@ -315,7 +284,7 @@ String toString() {
 /// @nodoc
 abstract mixin class _$ChangeSubgroupEventCopyWith<$Res> implements $SelectedGroupEventCopyWith<$Res> {
   factory _$ChangeSubgroupEventCopyWith(_ChangeSubgroupEvent value, $Res Function(_ChangeSubgroupEvent) _then) = __$ChangeSubgroupEventCopyWithImpl;
-@override @useResult
+@useResult
 $Res call({
  String newValue
 });
@@ -334,7 +303,7 @@ class __$ChangeSubgroupEventCopyWithImpl<$Res>
 
 /// Create a copy of SelectedGroupEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? newValue = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? newValue = null,}) {
   return _then(_ChangeSubgroupEvent(
 null == newValue ? _self.newValue : newValue // ignore: cast_nullable_to_non_nullable
 as String,

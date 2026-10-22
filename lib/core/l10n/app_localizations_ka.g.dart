@@ -96,13 +96,28 @@ class AppLocalizationsKa extends AppLocalizations {
   String get subgroup_all => 'ქვეჯგუფი: ყველა';
 
   @override
-  String classes_count(Object count) {
-    return '$count ლექცია';
+  String classes_count(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ლექცია',
+      one: '1 ლექცია',
+      zero: '0 ლექცია',
+    );
+    return '$_temp0';
   }
 
   @override
-  String free_period(Object hours, Object minutes) {
-    return 'თავისუფალი პერიოდი · $hours საათი $minutes წუთი';
+  String get free_period => 'თავისუფალი პერიოდი';
+
+  @override
+  String hours_count(num count) {
+    return '$count საათი';
+  }
+
+  @override
+  String minutes_count(num count) {
+    return '$count წუთი';
   }
 
   @override
@@ -171,4 +186,22 @@ class AppLocalizationsKa extends AppLocalizations {
 
   @override
   String get language_title => 'ენა';
+
+  @override
+  String get close => 'დახურვა';
+
+  @override
+  String get degree_bachelor => 'ბაკალავრიატი';
+
+  @override
+  String get degree_master => 'მაგისტრატურა';
+
+  @override
+  String get degree_doctor => 'დოქტორანტურა';
+
+  @override
+  String get degree_vocational => 'პროფესიული განათლება';
+
+  @override
+  String get degree_preparatory_course => 'ქართული ენის მომზადების კურსი';
 }

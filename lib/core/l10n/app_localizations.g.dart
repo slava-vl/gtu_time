@@ -252,14 +252,26 @@ abstract class AppLocalizations {
   /// No description provided for @classes_count.
   ///
   /// In en, this message translates to:
-  /// **'{count} classes'**
-  String classes_count(Object count);
+  /// **'{count, plural, =0{0 classes} =1{1 class} other{{count} classes}}'**
+  String classes_count(num count);
 
   /// No description provided for @free_period.
   ///
   /// In en, this message translates to:
-  /// **'Free period · {hours} hour {minutes} minute'**
-  String free_period(Object hours, Object minutes);
+  /// **'Free period'**
+  String get free_period;
+
+  /// No description provided for @hours_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 hour} other{{count} hours}}'**
+  String hours_count(num count);
+
+  /// No description provided for @minutes_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 minute} other{{count} minutes}}'**
+  String minutes_count(num count);
 
   /// No description provided for @day_without_classes_title.
   ///
@@ -374,6 +386,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Language'**
   String get language_title;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @degree_bachelor.
+  ///
+  /// In en, this message translates to:
+  /// **'Bachelor\'s degree'**
+  String get degree_bachelor;
+
+  /// No description provided for @degree_master.
+  ///
+  /// In en, this message translates to:
+  /// **'Master\'s degree'**
+  String get degree_master;
+
+  /// No description provided for @degree_doctor.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctoral degree'**
+  String get degree_doctor;
+
+  /// No description provided for @degree_vocational.
+  ///
+  /// In en, this message translates to:
+  /// **'Vocational education'**
+  String get degree_vocational;
+
+  /// No description provided for @degree_preparatory_course.
+  ///
+  /// In en, this message translates to:
+  /// **'Georgian language preparatory course'**
+  String get degree_preparatory_course;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

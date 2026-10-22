@@ -96,13 +96,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get subgroup_all => 'Subgroup: All';
 
   @override
-  String classes_count(Object count) {
-    return '$count classes';
+  String classes_count(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count classes',
+      one: '1 class',
+      zero: '0 classes',
+    );
+    return '$_temp0';
   }
 
   @override
-  String free_period(Object hours, Object minutes) {
-    return 'Free period · $hours hour $minutes minute';
+  String get free_period => 'Free period';
+
+  @override
+  String hours_count(num count) {
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count hours', one: '1 hour');
+    return '$_temp0';
+  }
+
+  @override
+  String minutes_count(num count) {
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count minutes', one: '1 minute');
+    return '$_temp0';
   }
 
   @override
@@ -172,4 +189,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get language_title => 'Language';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get degree_bachelor => 'Bachelor\'s degree';
+
+  @override
+  String get degree_master => 'Master\'s degree';
+
+  @override
+  String get degree_doctor => 'Doctoral degree';
+
+  @override
+  String get degree_vocational => 'Vocational education';
+
+  @override
+  String get degree_preparatory_course => 'Georgian language preparatory course';
 }

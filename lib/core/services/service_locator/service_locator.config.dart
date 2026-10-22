@@ -21,10 +21,16 @@ import 'package:gtu_time/core/services/initial_route/service/i_initial_route_ser
     as _i828;
 import 'package:gtu_time/core/services/initial_route/service/initial_route_service.dart'
     as _i1043;
+import 'package:gtu_time/feature/group/data/data_source/groups_api.dart'
+    as _i40;
 import 'package:gtu_time/feature/group/data/data_source/selected_group_local_db.dart'
     as _i102;
+import 'package:gtu_time/feature/group/data/repository/groups_repository.dart'
+    as _i260;
 import 'package:gtu_time/feature/group/data/repository/selected_group_repository.dart'
     as _i205;
+import 'package:gtu_time/feature/group/domain/repository/i_groups_repository.dart'
+    as _i152;
 import 'package:gtu_time/feature/group/domain/repository/i_selected_group_repository.dart'
     as _i649;
 import 'package:gtu_time/feature/localization_control/data/data_source/localization_control_datasource.dart'
@@ -64,9 +70,13 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.lazySingleton<_i361.Dio>(() => dioModule.clearDio);
+    gh.factory<_i40.GroupsApi>(() => _i40.GroupsApi(gh<_i361.Dio>()));
     gh.factory<_i1059.ScheduleApi>(() => _i1059.ScheduleApi(gh<_i361.Dio>()));
     gh.lazySingleton<_i102.ISelectedGroupLocalDB>(
       () => _i102.SelectedGroupLocalDB(gh<_i460.SharedPreferences>()),
+    );
+    gh.factory<_i152.IGroupsRepository>(
+      () => _i260.GroupsRepository(gh<_i40.GroupsApi>()),
     );
     gh.lazySingleton<_i358.IThemeControlDatasource>(
       () => _i358.ThemeControlDatasource(
@@ -85,6 +95,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i649.ISelectedGroupRepository>(
       () => _i205.SelectedGroupRepository(gh<_i102.ISelectedGroupLocalDB>()),
     );
+    gh.factory<_i854.IScheduleRepository>(
+      () => _i114.ScheduleRepository(
+        gh<_i1059.ScheduleApi>(),
+        gh<_i887.IScheduleLocalDb>(),
+        gh<String>(),
+      ),
+    );
     gh.lazySingleton<_i377.ILocalizationControlRepository>(
       () => _i134.LocalizationControlRepository(
         datasource: gh<_i1037.ILocalizationControlDatasource>(),
@@ -94,13 +111,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i556.ThemeControlRepository(
         themeControlDatasource: gh<_i358.IThemeControlDatasource>(),
       ),
-    );
-    await gh.singletonAsync<_i854.IScheduleRepository>(
-      () => _i114.ScheduleRepository.init(
-        gh<_i1059.ScheduleApi>(),
-        gh<_i887.IScheduleLocalDb>(),
-      ),
-      preResolve: true,
     );
     await gh.singletonAsync<_i828.IInitialRouteService>(() {
       final i = _i1043.InitialRouteService(
