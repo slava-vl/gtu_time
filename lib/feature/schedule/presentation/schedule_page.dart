@@ -1,47 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:gtu_time/core/extension/extensions.dart';
 import 'package:gtu_time/core/extension/src/string_extension.dart';
 import 'package:gtu_time/core/resources/assets.gen.dart';
-import 'package:gtu_time/core/router/routes_enum.dart';
 import 'package:gtu_time/core/theme/radiuses.dart';
 import 'package:gtu_time/core/ui_kit/ui_kit.dart';
-import 'package:gtu_time/feature/group/domain/entity/group.dart';
-import 'package:gtu_time/feature/group/presentation/selected_group_scope.dart';
 import 'package:gtu_time/feature/schedule/bloc/schedule_bloc.dart';
 import 'package:gtu_time/feature/schedule/domain/entity/day_schedule.dart';
 import 'package:gtu_time/feature/schedule/domain/entity/lesson.dart';
 import 'package:gtu_time/feature/schedule/presentation/components/choose_subgroup_bottom_sheet.dart';
 import 'package:gtu_time/feature/schedule/presentation/components/lesson_widget.dart';
+import 'package:gtu_time/feature/schedule/presentation/components/selected_target_header.dart';
 import 'package:gtu_time/feature/schedule/presentation/schedule_scope.dart';
-import 'package:gtu_time/feature/settings/presentation/settings_bottom_sheet.dart';
+import 'package:gtu_time/feature/schedule_target/presentation/selected_targets_scope.dart';
 import 'package:intl/intl.dart';
 
 class SchedulePage extends StatelessWidget {
-  const new({super.key});
+  const SchedulePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final spacings = context.theme.spacings;
-    final selectedGroup = SelectedGroupScope.groupOf(context, listen: true)!;
-    return ScheduleScope(
-      key: ValueKey(selectedGroup.number),
-      group: selectedGroup.number,
-      child: Material(
-        child: Column(
-          children: [
-            // Фиксированная шапка: группа + настройки
-            Padding(
-              padding: EdgeInsets.fromLTRB(spacings.s16, MediaQuery.paddingOf(context).top, spacings.s16, spacings.s8),
-              child: _GroupHeader(selectedGroup: selectedGroup),
+  Widget build(BuildContext context) => ScheduleScope(
+    child: Material(
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+              context.theme.spacings.s16,
+              MediaQuery.paddingOf(context).top,
+              context.theme.spacings.s16,
+              context.theme.spacings.s8,
             ),
-            Expanded(child: const _Body()),
-          ],
-        ),
+            child: SelectedTargetHeader(),
+          ),
+          Expanded(child: const _Body()),
+        ],
       ),
-    );
-  }
+    ),
+  );
 }
 
 class _Body extends StatefulWidget {
@@ -80,14 +75,14 @@ class _BodyState extends State<_Body> {
   @override
   Widget build(BuildContext context) {
     final spacings = context.theme.spacings;
-    final selectedGroup = SelectedGroupScope.groupOf(context, listen: true);
-    final selectedSubgroup = SelectedGroupScope.subgroupOf(context, listen: true);
-    final subgroups = ScheduleScope.subgroupsOf(context, group: selectedGroup!, listen: true);
-    final schedule = ScheduleScope.scheduleOf(context, group: selectedGroup, listen: true) ?? [];
+    final target = SelectedTargetsScope.targetOf(context, listen: true);
+    final selectedSubgroup = target?.subgroup;
+    final subgroups = ScheduleScope.subgroupsOf(context, group: target?.group, listen: true);
+    final schedule = ScheduleScope.scheduleOf(context, listen: true) ?? [];
 
     return NestedScrollView(
       floatHeaderSlivers: true,
-      headerSliverBuilder: (context, innerBoxIsScrolled) => [
+      headerSliverBuilder: (context, _) => [
         SliverToBoxAdapter(
           child: Padding(
             padding: .only(left: spacings.s16, right: spacings.s20, bottom: spacings.s8),
@@ -103,7 +98,7 @@ class _BodyState extends State<_Body> {
                         initialSelectedValue: selectedSubgroup,
                       );
                       if (!context.mounted || res == null || res == selectedSubgroup) return;
-                      SelectedGroupScope.changeSubgroup(context, newValue: res);
+                      SelectedTargetsScope.changeSubgroup(context, subgroup: res.isEmpty ? null : res);
                     },
                     title: selectedSubgroup ?? context.l10n.subgroup_all,
                     isDisabled: subgroups.isEmpty,
@@ -140,6 +135,7 @@ class _BodyState extends State<_Body> {
                 return _DayPage(
                   itemIndex: itemIndex,
                   lessons: lessons,
+                  selectedSubgroup: selectedSubgroup,
                   onBrowseAnotherDay: () => _selectWeekDay(selectedWeekDay + 1),
                 );
               },
@@ -147,59 +143,6 @@ class _BodyState extends State<_Body> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _GroupHeader extends StatelessWidget {
-  final Group? selectedGroup;
-  const _GroupHeader({required this.selectedGroup});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      spacing: context.theme.spacings.s12,
-      children: [
-        Expanded(
-          child: InkWell(
-            highlightColor: context.theme.colorsPalette.interactive.pressed,
-            onTap: () => context.push(CommonRoutes.chooseGroup.path),
-            borderRadius: context.theme.radiuses.s12.circular,
-            child: Padding(
-              padding: .all(context.theme.spacings.s4),
-              child: Column(
-                crossAxisAlignment: .start,
-                children: [
-                  Row(
-                    spacing: context.theme.spacings.s8,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          selectedGroup?.number ?? '-',
-                          style: context.theme.textStyles.ag27.copyWith(
-                            color: context.theme.colorsPalette.text.primary,
-                          ),
-                        ),
-                      ),
-                      Assets.icons.chevronRight20.svg(colorFilter: context.theme.colorsPalette.brand.primary.filter),
-                    ],
-                  ),
-                  Text(
-                    selectedGroup?.faculty ?? '-',
-                    style: context.theme.textStyles.ag28.copyWith(color: context.theme.colorsPalette.text.secondary),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        PrimaryButton(
-          onTap: () => SettingsBottomSheet.show(context),
-          outerPadding: .all(context.theme.spacings.s12),
-          type: .secondary,
-          leftIcon: Assets.icons.settings20.svg(colorFilter: context.theme.colorsPalette.text.primary.filter),
-        ),
-      ],
     );
   }
 }
@@ -284,9 +227,15 @@ class _WeekDaysBar extends StatelessWidget {
 class _DayPage extends StatelessWidget {
   final int itemIndex;
   final List<Lesson> lessons;
+  final String? selectedSubgroup;
   final VoidCallback onBrowseAnotherDay;
 
-  const _DayPage({required this.itemIndex, required this.lessons, required this.onBrowseAnotherDay});
+  const _DayPage({
+    required this.itemIndex,
+    required this.lessons,
+    required this.selectedSubgroup,
+    required this.onBrowseAnotherDay,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -333,7 +282,6 @@ class _DayPage extends StatelessWidget {
                 fit: StackFit.expand,
                 children: [
                   CustomScrollView(
-                    // Без явного controller: страница подхватывает общий скролл NestedScrollView
                     physics: const ClampingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                     slivers: [
                       SliverToBoxAdapter(child: SizedBox(height: spacings.s12)),
@@ -347,6 +295,7 @@ class _DayPage extends StatelessWidget {
                               lesson: lesson,
                               weekday: itemIndex + 1,
                               key: ObjectKey(lesson),
+                              selectedSubgroup: selectedSubgroup,
                             );
 
                             if (index < lessons.length - 1) {

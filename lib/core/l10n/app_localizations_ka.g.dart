@@ -58,8 +58,27 @@ class AppLocalizationsKa extends AppLocalizations {
   String get search_results => 'ძებნის შედეგები';
 
   @override
-  String groups_count(Object count) {
-    return '$count ჯგუფი';
+  String groups_count(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ჯგუფი',
+      one: '1 ჯგუფი',
+      zero: '0 ჯგუფი',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String teachers_count(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ლექტორი',
+      one: '1 ლექტორი',
+      zero: '0 ლექტორი',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -204,4 +223,36 @@ class AppLocalizationsKa extends AppLocalizations {
 
   @override
   String get degree_preparatory_course => 'ქართული ენის მომზადების კურსი';
+
+  @override
+  String get group_label => 'ჯგუფი';
+
+  @override
+  String get teacher_label => 'ლექტორი';
+
+  @override
+  String get choose_teacher_description => 'აირჩიეთ ლექტორი განრიგის სანახავად';
+
+  @override
+  String get find_teacher => 'ლექტორის ძებნა';
+
+  @override
+  String get search_by_name_or_program => 'ძებნა სახელით ან პროგრამით';
+
+  @override
+  String get available_teachers => 'ხელმისაწვდომი ლექტორები';
+
+  @override
+  String get no_teachers_found => 'ლექტორები ვერ მოიძებნა';
+
+  @override
+  String no_teachers_match_query(Object query) {
+    return 'ლექტორი “$query” ვერ მოიძებნა. სცადეთ სხვა სახელი ან პროგრამა.';
+  }
+
+  @override
+  String get recent => 'ბოლო';
+
+  @override
+  String get add => 'დამატება';
 }

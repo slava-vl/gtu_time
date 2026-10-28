@@ -8,7 +8,7 @@ abstract class DioModule {
   Dio get clearDio {
     final dio = Dio(
       BaseOptions(
-        baseUrl: 'https://gtu-timetable.vercel.app/api/',
+        baseUrl: 'https://gtu-timetable.com/api/v2/',
         receiveTimeout: const Duration(seconds: 15),
         connectTimeout: const Duration(seconds: 15),
       ),

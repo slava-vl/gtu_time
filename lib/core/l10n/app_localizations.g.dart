@@ -192,8 +192,14 @@ abstract class AppLocalizations {
   /// No description provided for @groups_count.
   ///
   /// In en, this message translates to:
-  /// **'{count} groups'**
-  String groups_count(Object count);
+  /// **'{count, plural, =0{0 groups} =1{1 group} other{{count} groups}}'**
+  String groups_count(num count);
+
+  /// No description provided for @teachers_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{0 teachers} =1{1 teacher} other{{count} teachers}}'**
+  String teachers_count(num count);
 
   /// No description provided for @try_again.
   ///
@@ -422,6 +428,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Georgian language preparatory course'**
   String get degree_preparatory_course;
+
+  /// No description provided for @group_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get group_label;
+
+  /// No description provided for @teacher_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Teacher'**
+  String get teacher_label;
+
+  /// No description provided for @choose_teacher_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose teacher to see schedule'**
+  String get choose_teacher_description;
+
+  /// No description provided for @find_teacher.
+  ///
+  /// In en, this message translates to:
+  /// **'Find teacher'**
+  String get find_teacher;
+
+  /// No description provided for @search_by_name_or_program.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name or program'**
+  String get search_by_name_or_program;
+
+  /// No description provided for @available_teachers.
+  ///
+  /// In en, this message translates to:
+  /// **'Available teachers'**
+  String get available_teachers;
+
+  /// No description provided for @no_teachers_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No teachers found'**
+  String get no_teachers_found;
+
+  /// No description provided for @no_teachers_match_query.
+  ///
+  /// In en, this message translates to:
+  /// **'No teachers match “{query}”. Try a different name or program.'**
+  String no_teachers_match_query(Object query);
+
+  /// No description provided for @recent.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get recent;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

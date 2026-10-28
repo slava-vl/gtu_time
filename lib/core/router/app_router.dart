@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gtu_time/core/router/routes_enum.dart';
 import 'package:gtu_time/core/services/initial_route/service/i_initial_route_service.dart';
-import 'package:gtu_time/feature/group/presentation/select_group_page.dart';
 import 'package:gtu_time/feature/schedule/presentation/schedule_page.dart';
+import 'package:gtu_time/feature/schedule_target/presentation/schedule_targets_page.dart';
 import 'package:injectable/injectable.dart';
 
 part 'routes/common_routes.dart';

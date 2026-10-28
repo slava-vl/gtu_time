@@ -25,13 +25,17 @@ class ScheduleResponseAdapter extends TypeAdapter<ScheduleResponse> {
         (dynamic k, dynamic v) =>
             MapEntry(k as String, (v as List).cast<DaySchedule>()),
       ),
+      teachers: (fields[5] as Map).map(
+        (dynamic k, dynamic v) =>
+            MapEntry(k as String, (v as List).cast<DaySchedule>()),
+      ),
     );
   }
 
   @override
   void write(BinaryWriter writer, ScheduleResponse obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.week)
       ..writeByte(1)
@@ -41,7 +45,9 @@ class ScheduleResponseAdapter extends TypeAdapter<ScheduleResponse> {
       ..writeByte(3)
       ..write(obj.modifiedAt)
       ..writeByte(4)
-      ..write(obj.groups);
+      ..write(obj.groups)
+      ..writeByte(5)
+      ..write(obj.teachers);
   }
 
   @override

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gtu_time/core/extension/extensions.dart';
-import 'package:gtu_time/core/resources/assets.gen.dart';
 import 'package:gtu_time/core/theme/radiuses.dart';
-import 'package:gtu_time/core/ui_kit/src/primary_bottom_sheet.dart';
+import 'package:gtu_time/core/ui_kit/ui_kit.dart';
 
 class ChooseSubgroupBottomSheet extends StatelessWidget {
   final String? initialSelectedValue;
@@ -36,6 +35,7 @@ class ChooseSubgroupBottomSheet extends StatelessWidget {
           ),
           Flexible(
             child: SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
               child: Material(
                 color: context.theme.colorsPalette.surfaces.glassStrong,
                 shape: RoundedRectangleBorder(
@@ -47,8 +47,18 @@ class ChooseSubgroupBottomSheet extends StatelessWidget {
                   child: Column(
                     spacing: context.theme.spacings.s4,
                     children: [
-                      _SubgroupItem(title: '', isSelected: initialSelectedValue == null),
-                      ...(subgroups..sort()).map((e) => _SubgroupItem(title: e, isSelected: e == initialSelectedValue)),
+                      ChooseListItem(
+                        title: context.l10n.all_subgroups,
+                        isSelected: initialSelectedValue == null,
+                        onTap: () => context.pop(''),
+                      ),
+                      ...(subgroups..sort()).map(
+                        (e) => ChooseListItem(
+                          title: e,
+                          isSelected: e == initialSelectedValue,
+                          onTap: () => context.pop(e),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -56,43 +66,6 @@ class ChooseSubgroupBottomSheet extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _SubgroupItem extends StatelessWidget {
-  final bool isSelected;
-  final String title;
-  const new({required this.title, required this.isSelected});
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: isSelected ? context.theme.colorsPalette.surfaces.selected : Colors.transparent,
-      shape: RoundedRectangleBorder(borderRadius: context.theme.radiuses.s12.circular),
-      child: InkWell(
-        borderRadius: context.theme.radiuses.s12.circular,
-        onTap: () => context.pop(title),
-        child: Padding(
-          padding: .symmetric(vertical: context.theme.spacings.s14, horizontal: context.theme.spacings.s12),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  title.isEmpty ? context.l10n.all_subgroups : title,
-                  style: context.theme.textStyles.ag22.copyWith(color: context.theme.colorsPalette.text.primary),
-                ),
-              ),
-              if (isSelected)
-                Assets.icons.check11.svg(
-                  width: context.theme.spacings.s20,
-                  height: context.theme.spacings.s20,
-                  colorFilter: context.theme.colorsPalette.brand.primary.filter,
-                ),
-            ],
-          ),
-        ),
       ),
     );
   }

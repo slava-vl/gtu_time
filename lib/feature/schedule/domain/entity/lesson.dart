@@ -27,7 +27,15 @@ class Lesson extends Equatable {
     return Lesson(
       time: json['time'] as String? ?? '',
       slots: json['slots'] as int? ?? 1,
-      entries: (json['entries'] as List<dynamic>?)?.map((e) => LessonEntry.fromList(e as List<dynamic>)).toList() ?? [],
+      entries:
+          (json['entries'] as List<dynamic>?)
+              ?.map(
+                (e) => LessonEntry.fromList(
+                  e is List<dynamic> ? e : (e as Map<String, dynamic>)['lines'] as List<dynamic>,
+                ),
+              )
+              .toList() ??
+          [],
     );
   }
 

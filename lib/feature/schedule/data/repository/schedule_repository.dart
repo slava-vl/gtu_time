@@ -5,55 +5,36 @@ import 'package:gtu_time/feature/schedule/data/data_source/schedule_api.dart';
 import 'package:gtu_time/feature/schedule/data/data_source/schedule_local_db.dart';
 import 'package:gtu_time/feature/schedule/domain/entity/schedule_response.dart';
 import 'package:gtu_time/feature/schedule/domain/repository/i_schedule_repository.dart';
+import 'package:gtu_time/feature/schedule_target/domain/entity/schedule_target.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @Injectable(as: IScheduleRepository)
 final class ScheduleRepository implements IScheduleRepository {
   final ScheduleApi _api;
   final IScheduleLocalDb _localDB;
-  late final BehaviorSubject<ScheduleResponse?> _scheduleSubject;
-  late final BehaviorSubject<DateTime?> _lastUpdateSubject;
 
-  Future<void>? _updateFuture;
-  final String group;
+  const ScheduleRepository(this._api, this._localDB);
 
-  ScheduleRepository(this._api, this._localDB, this.group);
+  @override
+  Future<(ScheduleResponse, DateTime)> fetchSchedule(ScheduleTarget target) async {
+    final (schedule, lastUpdate) = await _localDB.read(target.key) ?? (null, null);
 
-  Future<void> init() async {
-    final (schedule, lastUpdate) = (await _localDB.read()) ?? (null, null);
-    _scheduleSubject = BehaviorSubject<ScheduleResponse?>.seeded(schedule);
-    _lastUpdateSubject = BehaviorSubject<DateTime?>.seeded(lastUpdate);
-    if (lastUpdate == null) return;
+    if (lastUpdate == null || schedule == null) return updateSchedule(target);
+
     final diff = DateTime.now().dateOnly.difference(lastUpdate.dateOnly).inSeconds;
-    if (diff > 0) {
-      unawaited(updateSchedule());
-    }
+    if (diff > 0) return updateSchedule(target);
+
+    return (schedule, lastUpdate);
   }
 
   @override
-  Stream<ScheduleResponse?> get scheduleStream => _scheduleSubject.stream;
+  Future<(ScheduleResponse, DateTime)> updateSchedule(ScheduleTarget target) async {
+    final schedule = target.type == .group
+        ? await _api.getGroupSchedule(target.key)
+        : await _api.getTeacherSchedule(target.key);
 
-  @override
-  ScheduleResponse? get schedule => _scheduleSubject.value;
-
-  @override
-  Stream<DateTime?> get lastUpdateStream => _lastUpdateSubject.stream;
-
-  @override
-  DateTime? get lastUpdate => _lastUpdateSubject.value;
-
-  @override
-  Future<void> updateSchedule() => _updateFuture ??= _update().whenComplete(() {
-    _updateFuture = null;
-  });
-
-  Future<void> _update() async {
-    final res = await _api.getGroupSchedule(group);
-    final date = DateTime.now();
-
-    _scheduleSubject.add(res);
-    _lastUpdateSubject.add(date);
-    await _localDB.save(res, date);
+    final now = DateTime.now();
+    await _localDB.save(target.key, schedule, now);
+    return (schedule, now);
   }
 }

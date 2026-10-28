@@ -58,8 +58,29 @@ class AppLocalizationsRu extends AppLocalizations {
   String get search_results => 'РЕЗУЛЬТАТЫ ПОИСКА';
 
   @override
-  String groups_count(Object count) {
-    return 'Групп: $count';
+  String groups_count(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count групп',
+      few: '$count группы',
+      one: '$count группа',
+      zero: '0 групп',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String teachers_count(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count преподавателей',
+      few: '$count преподавателя',
+      one: '$count преподаватель',
+      zero: '0 преподавателей',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -220,4 +241,36 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get degree_preparatory_course => 'Курс подготовки по грузинскому языку';
+
+  @override
+  String get group_label => 'Группа';
+
+  @override
+  String get teacher_label => 'Преподаватель';
+
+  @override
+  String get choose_teacher_description => 'Выберите преподавателя, чтобы увидеть расписание';
+
+  @override
+  String get find_teacher => 'Найдите преподавателя';
+
+  @override
+  String get search_by_name_or_program => 'Поиск по имени или программе';
+
+  @override
+  String get available_teachers => 'Доступные преподаватели';
+
+  @override
+  String get no_teachers_found => 'Преподаватели не найдены';
+
+  @override
+  String no_teachers_match_query(Object query) {
+    return 'По запросу «$query» преподаватели не найдены. Попробуйте другое имя или программу.';
+  }
+
+  @override
+  String get recent => 'Недавние';
+
+  @override
+  String get add => 'Добавить';
 }

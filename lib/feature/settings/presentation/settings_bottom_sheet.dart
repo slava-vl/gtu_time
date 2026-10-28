@@ -62,39 +62,25 @@ class SettingsBottomSheet extends StatelessWidget {
                     ),
                   ],
                 ),
-                Container(
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: context.theme.colorsPalette.surfaces.secondary,
-                    borderRadius: context.theme.radiuses.s12.circular,
-                  ),
-                  padding: .all(context.theme.spacings.s4),
-                  child: Row(
-                    spacing: context.theme.spacings.s4,
-                    children: [
-                      Expanded(
-                        child: SettingSelectItem(
-                          isSelected: ThemeControlScope.currentThemeOf(context) == null,
-                          title: context.l10n.theme_system,
-                          onTap: () => ThemeControlScope.changeTheme(context, theme: null),
-                        ),
-                      ),
-                      Expanded(
-                        child: SettingSelectItem(
-                          isSelected: ThemeControlScope.currentThemeOf(context) == CurrentTheme.light,
-                          title: context.l10n.theme_light,
-                          onTap: () => ThemeControlScope.changeTheme(context, theme: CurrentTheme.light),
-                        ),
-                      ),
-                      Expanded(
-                        child: SettingSelectItem(
-                          isSelected: ThemeControlScope.currentThemeOf(context) == CurrentTheme.dark,
-                          title: context.l10n.theme_dark,
-                          onTap: () => ThemeControlScope.changeTheme(context, theme: CurrentTheme.dark),
-                        ),
-                      ),
-                    ],
-                  ),
+                PrimaryTabBar<CurrentTheme?>(
+                  onTap: (value) => ThemeControlScope.changeTheme(context, theme: value),
+                  items: [
+                    PrimaryTabBarItem(
+                      value: null,
+                      title: context.l10n.theme_system,
+                      isSelected: ThemeControlScope.currentThemeOf(context) == null,
+                    ),
+                    PrimaryTabBarItem(
+                      value: CurrentTheme.light,
+                      title: context.l10n.theme_light,
+                      isSelected: ThemeControlScope.currentThemeOf(context) == CurrentTheme.light,
+                    ),
+                    PrimaryTabBarItem(
+                      value: CurrentTheme.dark,
+                      title: context.l10n.theme_dark,
+                      isSelected: ThemeControlScope.currentThemeOf(context) == CurrentTheme.dark,
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -126,27 +112,17 @@ class SettingsBottomSheet extends StatelessWidget {
                     ),
                   ],
                 ),
-                Container(
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: context.theme.colorsPalette.surfaces.secondary,
-                    borderRadius: context.theme.radiuses.s12.circular,
-                  ),
-                  padding: .all(context.theme.spacings.s4),
-                  child: Row(
-                    spacing: context.theme.spacings.s4,
-                    children: LocaleEntity.values
-                        .map(
-                          (e) => Expanded(
-                            child: SettingSelectItem(
-                              isSelected: LocalizationScope.localeEntityOf(context) == e,
-                              title: e.nativeName,
-                              onTap: () => LocalizationScope.changeLocale(context, locale: e),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
+                PrimaryTabBar<LocaleEntity>(
+                  onTap: (value) => LocalizationScope.changeLocale(context, locale: value),
+                  items: LocaleEntity.values
+                      .map(
+                        (e) => PrimaryTabBarItem(
+                          value: e,
+                          title: e.nativeName,
+                          isSelected: LocalizationScope.localeEntityOf(context) == e,
+                        ),
+                      )
+                      .toList(),
                 ),
               ],
             ),

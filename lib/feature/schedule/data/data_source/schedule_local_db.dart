@@ -10,8 +10,8 @@ const String _scheduleKey = 'schedule';
 const String _scheduleLastUpdateKey = 'scheduleLastUpdate';
 
 abstract interface class IScheduleLocalDb {
-  Future<void> save(ScheduleResponse newSchedule, DateTime lastUpdate);
-  Future<(ScheduleResponse, DateTime)?> read();
+  Future<void> save(String keyPrefix, ScheduleResponse newSchedule, DateTime lastUpdate);
+  Future<(ScheduleResponse, DateTime)?> read(String keyPrefix);
 }
 
 @Injectable(as: IScheduleLocalDb)
@@ -20,22 +20,22 @@ class ScheduleLocalDb implements IScheduleLocalDb {
   const ScheduleLocalDb(this._sharedPreferences);
 
   @override
-  Future<void> save(ScheduleResponse newSchedule, DateTime lastUpdate) async {
+  Future<void> save(String keyPrefix, ScheduleResponse newSchedule, DateTime lastUpdate) async {
     final box = await Hive.openBox<ScheduleResponse>(_scheduleBoxName);
-    await box.put(_scheduleKey, newSchedule);
+    await box.put('${keyPrefix}_$_scheduleKey', newSchedule);
     unawaited(box.close());
-    await _sharedPreferences.setInt(_scheduleLastUpdateKey, lastUpdate.millisecondsSinceEpoch);
+    await _sharedPreferences.setInt('${keyPrefix}_$_scheduleLastUpdateKey', lastUpdate.millisecondsSinceEpoch);
   }
 
   @override
-  Future<(ScheduleResponse, DateTime)?> read() async {
-    final lastUpdate = _sharedPreferences.getInt(_scheduleLastUpdateKey);
+  Future<(ScheduleResponse, DateTime)?> read(String keyPrefix) async {
+    final lastUpdate = _sharedPreferences.getInt('${keyPrefix}_$_scheduleLastUpdateKey');
     if (lastUpdate == null) return null;
 
     final lastUpdateDate = DateTime.fromMillisecondsSinceEpoch(lastUpdate);
 
     final box = await Hive.openBox<ScheduleResponse>(_scheduleBoxName);
-    final value = box.get(_scheduleKey);
+    final value = box.get('${keyPrefix}_$_scheduleKey');
     unawaited(box.close());
 
     return value != null ? (value, lastUpdateDate) : null;

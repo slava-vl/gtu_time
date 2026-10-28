@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:gtu_time/core/extension/extensions.dart';
 import 'package:gtu_time/core/resources/assets.gen.dart';
 import 'package:gtu_time/core/theme/radiuses.dart';
-import 'package:gtu_time/feature/group/presentation/selected_group_scope.dart';
 import 'package:gtu_time/feature/schedule/domain/entity/lesson.dart';
 
 class LessonWidget extends StatefulWidget {
   final Lesson lesson;
   final int weekday;
-  const LessonWidget({required this.lesson, required this.weekday, super.key});
+  final String? selectedSubgroup;
+  const LessonWidget({required this.lesson, required this.weekday, required this.selectedSubgroup, super.key});
 
   @override
   State<LessonWidget> createState() => _LessonWidgetState();
@@ -102,8 +102,6 @@ class _LessonWidgetState extends State<LessonWidget> with WidgetsBindingObserver
 
   @override
   Widget build(BuildContext context) {
-    final selectedSubgroup = SelectedGroupScope.subgroupOf(context, listen: true);
-
     return Row(
       crossAxisAlignment: .start,
       spacing: context.theme.spacings.s10,
@@ -151,7 +149,10 @@ class _LessonWidgetState extends State<LessonWidget> with WidgetsBindingObserver
               spacing: context.theme.spacings.s4,
               children: widget.lesson.entries
                   .where(
-                    (item) => selectedSubgroup == null || item.subgroup == selectedSubgroup || item.subgroup == null,
+                    (item) =>
+                        widget.selectedSubgroup == null ||
+                        item.subgroup == widget.selectedSubgroup ||
+                        item.subgroup == null,
                   )
                   .map(
                     (item) => Column(

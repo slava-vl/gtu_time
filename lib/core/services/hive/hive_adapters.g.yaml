@@ -5,7 +5,7 @@ nextTypeId: 4
 types:
   ScheduleResponse:
     typeId: 0
-    nextIndex: 5
+    nextIndex: 6
     fields:
       week:
         index: 0
@@ -17,6 +17,8 @@ types:
         index: 3
       groups:
         index: 4
+      teachers:
+        index: 5
   DaySchedule:
     typeId: 1
     nextIndex: 2

@@ -16,7 +16,8 @@
   "search_by_group_or_program": "Поиск по группе или программе",
   "available_groups": "ДОСТУПНЫЕ ГРУППЫ",
   "search_results": "РЕЗУЛЬТАТЫ ПОИСКА",
-  "groups_count": "Групп: {count}",
+  "groups_count": "{count, plural, =0{0 групп} one{{count} группа} few{{count} группы} other{{count} групп}}",
+  "teachers_count": "{count, plural, =0{0 преподавателей} one{{count} преподаватель} few{{count} преподавателя} other{{count} преподавателей}}",
   "try_again": "Попробовать снова",
   "group_selected_hint": "Выбрана группа {group} · Вы сможете изменить её позже.",
   "continue_button": "Продолжить",
@@ -54,5 +55,15 @@
   "degree_master": "Магистратура",
   "degree_doctor": "Докторантура",
   "degree_vocational": "Профессиональное образование",
-  "degree_preparatory_course": "Курс подготовки по грузинскому языку"
+  "degree_preparatory_course": "Курс подготовки по грузинскому языку",
+  "group_label": "Группа",
+  "teacher_label": "Преподаватель",
+  "choose_teacher_description": "Выберите преподавателя, чтобы увидеть расписание",
+  "find_teacher": "Найдите преподавателя",
+  "search_by_name_or_program": "Поиск по имени или программе",
+  "available_teachers": "Доступные преподаватели",
+  "no_teachers_found": "Преподаватели не найдены",
+  "no_teachers_match_query": "По запросу «{query}» преподаватели не найдены. Попробуйте другое имя или программу.",
+  "recent": "Недавние",
+  "add": "Добавить"
 }

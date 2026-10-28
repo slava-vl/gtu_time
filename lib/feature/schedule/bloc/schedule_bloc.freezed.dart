@@ -56,14 +56,12 @@ extension ScheduleEventPatterns on ScheduleEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _InitEvent value)?  init,TResult Function( _RefreshEvent value)?  refresh,TResult Function( _UpdateScheduleEvent value)?  updateSchedule,TResult Function( _UpdateLastUpdateEvent value)?  updateLastUpdate,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _RefreshEvent value)?  refresh,TResult Function( _ChangeTargetEvent value)?  changeTarget,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _InitEvent() when init != null:
-return init(_that);case _RefreshEvent() when refresh != null:
-return refresh(_that);case _UpdateScheduleEvent() when updateSchedule != null:
-return updateSchedule(_that);case _UpdateLastUpdateEvent() when updateLastUpdate != null:
-return updateLastUpdate(_that);case _:
+case _RefreshEvent() when refresh != null:
+return refresh(_that);case _ChangeTargetEvent() when changeTarget != null:
+return changeTarget(_that);case _:
   return orElse();
 
 }
@@ -81,14 +79,12 @@ return updateLastUpdate(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _InitEvent value)  init,required TResult Function( _RefreshEvent value)  refresh,required TResult Function( _UpdateScheduleEvent value)  updateSchedule,required TResult Function( _UpdateLastUpdateEvent value)  updateLastUpdate,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _RefreshEvent value)  refresh,required TResult Function( _ChangeTargetEvent value)  changeTarget,}){
 final _that = this;
 switch (_that) {
-case _InitEvent():
-return init(_that);case _RefreshEvent():
-return refresh(_that);case _UpdateScheduleEvent():
-return updateSchedule(_that);case _UpdateLastUpdateEvent():
-return updateLastUpdate(_that);}
+case _RefreshEvent():
+return refresh(_that);case _ChangeTargetEvent():
+return changeTarget(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -102,14 +98,12 @@ return updateLastUpdate(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _InitEvent value)?  init,TResult? Function( _RefreshEvent value)?  refresh,TResult? Function( _UpdateScheduleEvent value)?  updateSchedule,TResult? Function( _UpdateLastUpdateEvent value)?  updateLastUpdate,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _RefreshEvent value)?  refresh,TResult? Function( _ChangeTargetEvent value)?  changeTarget,}){
 final _that = this;
 switch (_that) {
-case _InitEvent() when init != null:
-return init(_that);case _RefreshEvent() when refresh != null:
-return refresh(_that);case _UpdateScheduleEvent() when updateSchedule != null:
-return updateSchedule(_that);case _UpdateLastUpdateEvent() when updateLastUpdate != null:
-return updateLastUpdate(_that);case _:
+case _RefreshEvent() when refresh != null:
+return refresh(_that);case _ChangeTargetEvent() when changeTarget != null:
+return changeTarget(_that);case _:
   return null;
 
 }
@@ -126,13 +120,11 @@ return updateLastUpdate(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  init,TResult Function( Completer<void>? completer)?  refresh,TResult Function( ScheduleResponse schedule)?  updateSchedule,TResult Function( DateTime lastUpdate)?  updateLastUpdate,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( Completer<void>? completer)?  refresh,TResult Function( ScheduleTarget target)?  changeTarget,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _InitEvent() when init != null:
-return init();case _RefreshEvent() when refresh != null:
-return refresh(_that.completer);case _UpdateScheduleEvent() when updateSchedule != null:
-return updateSchedule(_that.schedule);case _UpdateLastUpdateEvent() when updateLastUpdate != null:
-return updateLastUpdate(_that.lastUpdate);case _:
+case _RefreshEvent() when refresh != null:
+return refresh(_that.completer);case _ChangeTargetEvent() when changeTarget != null:
+return changeTarget(_that.target);case _:
   return orElse();
 
 }
@@ -150,13 +142,11 @@ return updateLastUpdate(_that.lastUpdate);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  init,required TResult Function( Completer<void>? completer)  refresh,required TResult Function( ScheduleResponse schedule)  updateSchedule,required TResult Function( DateTime lastUpdate)  updateLastUpdate,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( Completer<void>? completer)  refresh,required TResult Function( ScheduleTarget target)  changeTarget,}) {final _that = this;
 switch (_that) {
-case _InitEvent():
-return init();case _RefreshEvent():
-return refresh(_that.completer);case _UpdateScheduleEvent():
-return updateSchedule(_that.schedule);case _UpdateLastUpdateEvent():
-return updateLastUpdate(_that.lastUpdate);}
+case _RefreshEvent():
+return refresh(_that.completer);case _ChangeTargetEvent():
+return changeTarget(_that.target);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -170,51 +160,17 @@ return updateLastUpdate(_that.lastUpdate);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  init,TResult? Function( Completer<void>? completer)?  refresh,TResult? Function( ScheduleResponse schedule)?  updateSchedule,TResult? Function( DateTime lastUpdate)?  updateLastUpdate,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( Completer<void>? completer)?  refresh,TResult? Function( ScheduleTarget target)?  changeTarget,}) {final _that = this;
 switch (_that) {
-case _InitEvent() when init != null:
-return init();case _RefreshEvent() when refresh != null:
-return refresh(_that.completer);case _UpdateScheduleEvent() when updateSchedule != null:
-return updateSchedule(_that.schedule);case _UpdateLastUpdateEvent() when updateLastUpdate != null:
-return updateLastUpdate(_that.lastUpdate);case _:
+case _RefreshEvent() when refresh != null:
+return refresh(_that.completer);case _ChangeTargetEvent() when changeTarget != null:
+return changeTarget(_that.target);case _:
   return null;
 
 }
 }
 
 }
-
-/// @nodoc
-
-
-class _InitEvent extends ScheduleEvent {
-  const _InitEvent(): super._();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _InitEvent);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-    return 'ScheduleEvent.init()';
-}
-
-
-}
-
-
-
 
 /// @nodoc
 
@@ -287,45 +243,45 @@ as Completer<void>?,
 /// @nodoc
 
 
-class _UpdateScheduleEvent extends ScheduleEvent {
-  const _UpdateScheduleEvent(this.schedule): super._();
+class _ChangeTargetEvent extends ScheduleEvent {
+  const _ChangeTargetEvent(this.target): super._();
   
 
- final  ScheduleResponse schedule;
+ final  ScheduleTarget target;
 
 /// Create a copy of ScheduleEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$UpdateScheduleEventCopyWith<_UpdateScheduleEvent> get copyWith => __$UpdateScheduleEventCopyWithImpl<_UpdateScheduleEvent>(this, _$identity);
+_$ChangeTargetEventCopyWith<_ChangeTargetEvent> get copyWith => __$ChangeTargetEventCopyWithImpl<_ChangeTargetEvent>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateScheduleEvent&&(identical(other.schedule, schedule) || other.schedule == schedule));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangeTargetEvent&&(identical(other.target, target) || other.target == target));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,schedule);
+    return Object.hash(runtimeType,target);
 }
 
 @override
 String toString() {
-    return 'ScheduleEvent.updateSchedule(schedule: $schedule)';
+    return 'ScheduleEvent.changeTarget(target: $target)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$UpdateScheduleEventCopyWith<$Res> implements $ScheduleEventCopyWith<$Res> {
-  factory _$UpdateScheduleEventCopyWith(_UpdateScheduleEvent value, $Res Function(_UpdateScheduleEvent) _then) = __$UpdateScheduleEventCopyWithImpl;
+abstract mixin class _$ChangeTargetEventCopyWith<$Res> implements $ScheduleEventCopyWith<$Res> {
+  factory _$ChangeTargetEventCopyWith(_ChangeTargetEvent value, $Res Function(_ChangeTargetEvent) _then) = __$ChangeTargetEventCopyWithImpl;
 @useResult
 $Res call({
- ScheduleResponse schedule
+ ScheduleTarget target
 });
 
 
@@ -333,87 +289,19 @@ $Res call({
 
 }
 /// @nodoc
-class __$UpdateScheduleEventCopyWithImpl<$Res>
-    implements _$UpdateScheduleEventCopyWith<$Res> {
-  __$UpdateScheduleEventCopyWithImpl(this._self, this._then);
+class __$ChangeTargetEventCopyWithImpl<$Res>
+    implements _$ChangeTargetEventCopyWith<$Res> {
+  __$ChangeTargetEventCopyWithImpl(this._self, this._then);
 
-  final _UpdateScheduleEvent _self;
-  final $Res Function(_UpdateScheduleEvent) _then;
-
-/// Create a copy of ScheduleEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? schedule = null,}) {
-  return _then(_UpdateScheduleEvent(
-null == schedule ? _self.schedule : schedule // ignore: cast_nullable_to_non_nullable
-as ScheduleResponse,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class _UpdateLastUpdateEvent extends ScheduleEvent {
-  const _UpdateLastUpdateEvent(this.lastUpdate): super._();
-  
-
- final  DateTime lastUpdate;
+  final _ChangeTargetEvent _self;
+  final $Res Function(_ChangeTargetEvent) _then;
 
 /// Create a copy of ScheduleEvent
 /// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$UpdateLastUpdateEventCopyWith<_UpdateLastUpdateEvent> get copyWith => __$UpdateLastUpdateEventCopyWithImpl<_UpdateLastUpdateEvent>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateLastUpdateEvent&&(identical(other.lastUpdate, lastUpdate) || other.lastUpdate == lastUpdate));
-}
-
-
-@override
-int get hashCode {
-    return Object.hash(runtimeType,lastUpdate);
-}
-
-@override
-String toString() {
-    return 'ScheduleEvent.updateLastUpdate(lastUpdate: $lastUpdate)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$UpdateLastUpdateEventCopyWith<$Res> implements $ScheduleEventCopyWith<$Res> {
-  factory _$UpdateLastUpdateEventCopyWith(_UpdateLastUpdateEvent value, $Res Function(_UpdateLastUpdateEvent) _then) = __$UpdateLastUpdateEventCopyWithImpl;
-@useResult
-$Res call({
- DateTime lastUpdate
-});
-
-
-
-
-}
-/// @nodoc
-class __$UpdateLastUpdateEventCopyWithImpl<$Res>
-    implements _$UpdateLastUpdateEventCopyWith<$Res> {
-  __$UpdateLastUpdateEventCopyWithImpl(this._self, this._then);
-
-  final _UpdateLastUpdateEvent _self;
-  final $Res Function(_UpdateLastUpdateEvent) _then;
-
-/// Create a copy of ScheduleEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? lastUpdate = null,}) {
-  return _then(_UpdateLastUpdateEvent(
-null == lastUpdate ? _self.lastUpdate : lastUpdate // ignore: cast_nullable_to_non_nullable
-as DateTime,
+@pragma('vm:prefer-inline') $Res call({Object? target = null,}) {
+  return _then(_ChangeTargetEvent(
+null == target ? _self.target : target // ignore: cast_nullable_to_non_nullable
+as ScheduleTarget,
   ));
 }
 

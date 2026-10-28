@@ -16,7 +16,8 @@
   "search_by_group_or_program": "ძებნა ჯგუფის ან პროგრამის მიხედვით",
   "available_groups": "ხელმისაწვდომი ჯგუფები",
   "search_results": "ძებნის შედეგები",
-  "groups_count": "{count} ჯგუფი",
+  "groups_count": "{count, plural, =0{0 ჯგუფი} =1{1 ჯგუფი} other{{count} ჯგუფი}}",
+  "teachers_count": "{count, plural, =0{0 ლექტორი} =1{1 ლექტორი} other{{count} ლექტორი}}",
   "try_again": "ხელახლა ცდა",
   "group_selected_hint": "არჩეულია ჯგუფი {group} · შეცვლა მოგვიანებითაც შეგიძლიათ.",
   "continue_button": "გაგრძელება",
@@ -54,5 +55,15 @@
   "degree_master": "მაგისტრატურა",
   "degree_doctor": "დოქტორანტურა",
   "degree_vocational": "პროფესიული განათლება",
-  "degree_preparatory_course": "ქართული ენის მომზადების კურსი"
+  "degree_preparatory_course": "ქართული ენის მომზადების კურსი",
+  "group_label": "ჯგუფი",
+  "teacher_label": "ლექტორი",
+  "choose_teacher_description": "აირჩიეთ ლექტორი განრიგის სანახავად",
+  "find_teacher": "ლექტორის ძებნა",
+  "search_by_name_or_program": "ძებნა სახელით ან პროგრამით",
+  "available_teachers": "ხელმისაწვდომი ლექტორები",
+  "no_teachers_found": "ლექტორები ვერ მოიძებნა",
+  "no_teachers_match_query": "ლექტორი “{query}” ვერ მოიძებნა. სცადეთ სხვა სახელი ან პროგრამა.",
+  "recent": "ბოლო",
+  "add": "დამატება"
 }

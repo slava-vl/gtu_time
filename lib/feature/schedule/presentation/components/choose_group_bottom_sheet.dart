@@ -1,0 +1,68 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:gtu_time/core/extension/extensions.dart';
+import 'package:gtu_time/core/theme/radiuses.dart';
+import 'package:gtu_time/core/ui_kit/ui_kit.dart';
+import 'package:gtu_time/feature/schedule_target/presentation/selected_targets_scope.dart';
+
+class ChooseGroupBottomSheet extends StatelessWidget {
+  const ChooseGroupBottomSheet._();
+
+  static Future<int?> show(BuildContext context) =>
+      PrimaryBottomSheet.show(context: context, builder: (_) => ChooseGroupBottomSheet._());
+
+  @override
+  Widget build(BuildContext context) {
+    final targets = SelectedTargetsScope.targetsOf(context, listen: true);
+    final target = SelectedTargetsScope.targetOf(context, listen: true);
+    return Padding(
+      padding: .only(
+        left: context.theme.spacings.s16,
+        right: context.theme.spacings.s16,
+        top: context.theme.spacings.s10,
+        bottom: context.theme.spacings.s16 + MediaQuery.paddingOf(context).bottom,
+      ),
+      child: Column(
+        mainAxisSize: .min,
+        crossAxisAlignment: .start,
+        spacing: context.theme.spacings.s10,
+        children: [
+          Text(
+            context.l10n.recent,
+            style: context.theme.textStyles.ag21.copyWith(color: context.theme.colorsPalette.text.primary),
+          ),
+          Flexible(
+            child: SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              child: Material(
+                color: context.theme.colorsPalette.surfaces.glassStrong,
+                shape: RoundedRectangleBorder(
+                  borderRadius: context.theme.radiuses.s16.circular,
+                  side: BorderSide(color: context.theme.colorsPalette.bordersAndLights.defaultColor),
+                ),
+                child: Padding(
+                  padding: .all(context.theme.spacings.s8),
+                  child: Column(
+                    spacing: context.theme.spacings.s4,
+                    children: targets
+                        .map(
+                          (e) => ChooseListItem(
+                            title: e.title(context) ?? '-',
+                            subtitle: e.subtitle(context) ?? '-',
+                            isSelected: e == target,
+                            onTap: () => context.pop(targets.indexOf(e)),
+                            onDeleteTap: () => SelectedTargetsScope.removeTarget(context, target: e),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          PrimaryButton(onTap: () => context.pop(-1), title: '+ ${context.l10n.add}', type: .text, alignment: .center),
+        ],
+      ),
+    );
+  }
+}

@@ -12,5 +12,8 @@ abstract class ScheduleApi {
   factory ScheduleApi(Dio dio) = _ScheduleApi;
 
   @GET('schedule?group={group}&semester=1&week=0')
-  Future<ScheduleResponse> getGroupSchedule(@Path() group);
+  Future<ScheduleResponse> getGroupSchedule(@Path() String group);
+
+  @GET('schedule?teacher={teacher}&semester=1&week=0')
+  Future<ScheduleResponse> getTeacherSchedule(@Path() String teacher);
 }

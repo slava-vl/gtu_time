@@ -7,7 +7,7 @@ import 'package:gtu_time/core/ui_kit/ui_kit.dart';
 class ErrorCard extends StatelessWidget {
   final IErrorHandler error;
   final List<Widget> Function(BuildContext context) actionsBuilder;
-  const new({required this.error, required this.actionsBuilder, super.key});
+  const ErrorCard({required this.error, required this.actionsBuilder, super.key});
 
   static void show(
     BuildContext context, {

@@ -58,8 +58,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get search_results => 'SEARCH RESULTS';
 
   @override
-  String groups_count(Object count) {
-    return '$count groups';
+  String groups_count(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count groups',
+      one: '1 group',
+      zero: '0 groups',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String teachers_count(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count teachers',
+      one: '1 teacher',
+      zero: '0 teachers',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -207,4 +226,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get degree_preparatory_course => 'Georgian language preparatory course';
+
+  @override
+  String get group_label => 'Group';
+
+  @override
+  String get teacher_label => 'Teacher';
+
+  @override
+  String get choose_teacher_description => 'Choose teacher to see schedule';
+
+  @override
+  String get find_teacher => 'Find teacher';
+
+  @override
+  String get search_by_name_or_program => 'Search by name or program';
+
+  @override
+  String get available_teachers => 'Available teachers';
+
+  @override
+  String get no_teachers_found => 'No teachers found';
+
+  @override
+  String no_teachers_match_query(Object query) {
+    return 'No teachers match “$query”. Try a different name or program.';
+  }
+
+  @override
+  String get recent => 'Recent';
+
+  @override
+  String get add => 'Add';
 }

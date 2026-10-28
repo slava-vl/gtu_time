@@ -6,6 +6,7 @@ class ScheduleResponse {
   final DateTime checkedAt;
   final String modifiedAt;
   final Map<String, List<DaySchedule>> groups;
+  final Map<String, List<DaySchedule>> teachers;
 
   const ScheduleResponse({
     required this.week,
@@ -13,15 +14,22 @@ class ScheduleResponse {
     required this.checkedAt,
     required this.modifiedAt,
     required this.groups,
+    required this.teachers,
   });
 
   factory ScheduleResponse.fromJson(Map<String, dynamic> json) {
     final rawGroups = json['groups'] as Map<String, dynamic>? ?? {};
-
     final parsedGroups = rawGroups.map((groupId, daysList) {
       final list =
           (daysList as List<dynamic>?)?.map((e) => DaySchedule.fromJson(e as Map<String, dynamic>)).toList() ?? [];
       return MapEntry(groupId, list);
+    });
+
+    final rawTeachers = json['teachers'] as Map<String, dynamic>? ?? {};
+    final parsedTeachers = rawTeachers.map((teacherId, data) {
+      final daysList = (data as Map<String, dynamic>)['days'] as List<dynamic>?;
+      final list = daysList?.map((e) => DaySchedule.fromJson(e as Map<String, dynamic>)).toList() ?? [];
+      return MapEntry(teacherId, list);
     });
 
     return ScheduleResponse(
@@ -30,6 +38,7 @@ class ScheduleResponse {
       checkedAt: DateTime.tryParse(json['checkedAt'] as String? ?? '') ?? DateTime.now(),
       modifiedAt: json['modifiedAt'] as String? ?? '',
       groups: parsedGroups,
+      teachers: parsedTeachers,
     );
   }
 
@@ -39,5 +48,6 @@ class ScheduleResponse {
     'checkedAt': checkedAt.toIso8601String(),
     'modifiedAt': modifiedAt,
     'groups': groups.map((k, v) => MapEntry(k, v.map((e) => e.toJson()).toList())),
+    'teachers': teachers.map((k, v) => MapEntry(k, v.map((e) => e.toJson()).toList())),
   };
 }

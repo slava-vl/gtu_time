@@ -1,12 +1,8 @@
 import 'package:gtu_time/feature/schedule/domain/entity/schedule_response.dart';
+import 'package:gtu_time/feature/schedule_target/domain/entity/schedule_target.dart';
 
 abstract interface class IScheduleRepository {
-  Future<void> init();
-  Future<void> updateSchedule();
+  Future<(ScheduleResponse, DateTime)> fetchSchedule(ScheduleTarget target);
+  Future<(ScheduleResponse, DateTime)> updateSchedule(ScheduleTarget target);
 
-  Stream<ScheduleResponse?> get scheduleStream;
-  Stream<DateTime?> get lastUpdateStream;
-
-  ScheduleResponse? get schedule;
-  DateTime? get lastUpdate;
 }

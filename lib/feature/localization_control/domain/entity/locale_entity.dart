@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
 enum LocaleEntity {
-  en(countryCode: 'GB', languageCode: 'en', languageFullCode: 'en_EN', nativeName: 'English'),
-  ru(countryCode: 'RU', languageCode: 'ru', languageFullCode: 'ru_RU', nativeName: 'Русский'),
-  ka(countryCode: 'GE', languageCode: 'ka', languageFullCode: 'ka_GE', nativeName: 'ქართული');
+  en(countryCode: 'GB', languageCode: 'en', languageFullCode: 'en_EN', nativeName: 'English', systLangCode: 'en'),
+  ru(countryCode: 'RU', languageCode: 'ru', languageFullCode: 'ru_RU', nativeName: 'Русский', systLangCode: 'ru'),
+  ka(countryCode: 'GE', languageCode: 'ka', languageFullCode: 'ka_GE', nativeName: 'ქართული', systLangCode: 'ge');
 
   const LocaleEntity({
     required this.languageCode,
     required this.countryCode,
     required this.languageFullCode,
     required this.nativeName,
+    required this.systLangCode,
   });
 
   factory LocaleEntity.fromLocale(Locale locale) {
@@ -30,6 +31,7 @@ enum LocaleEntity {
   final String countryCode;
   final String languageFullCode;
   final String nativeName;
+  final String systLangCode;
 
   static const List<LocaleEntity> supported = [en, ru, ka];
 

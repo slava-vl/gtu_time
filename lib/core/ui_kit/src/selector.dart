@@ -7,7 +7,7 @@ class Selector extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
   final bool isDisabled;
-  const new({required this.title, required this.onTap, required this.isDisabled, super.key});
+  const Selector({required this.title, required this.onTap, required this.isDisabled, super.key});
 
   @override
   Widget build(BuildContext context) {

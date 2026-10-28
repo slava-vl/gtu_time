@@ -68,6 +68,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/wifi_off_28.svg
   SvgGenImage get wifiOff28 => const SvgGenImage('assets/icons/wifi_off_28.svg');
 
+  /// File path: assets/icons/x_20.svg
+  SvgGenImage get x20 => const SvgGenImage('assets/icons/x_20.svg');
+
   /// List of all assets
   List<SvgGenImage> get values => [
     arrowRight18,
@@ -87,6 +90,7 @@ class $AssetsIconsGen {
     settings20,
     sunMoon20,
     wifiOff28,
+    x20,
   ];
 }
 

@@ -6,6 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:gtu_time/core/error/error_handler.dart';
 import 'package:gtu_time/feature/schedule/domain/entity/schedule_response.dart';
 import 'package:gtu_time/feature/schedule/domain/repository/i_schedule_repository.dart';
+import 'package:gtu_time/feature/schedule_target/domain/entity/schedule_target.dart';
 
 part 'schedule_bloc.freezed.dart';
 
@@ -13,11 +14,8 @@ part 'schedule_bloc.freezed.dart';
 sealed class ScheduleEvent with _$ScheduleEvent {
   const ScheduleEvent._();
 
-  const factory ScheduleEvent.init() = _InitEvent;
   const factory ScheduleEvent.refresh({Completer<void>? completer}) = _RefreshEvent;
-
-  const factory ScheduleEvent.updateSchedule(ScheduleResponse schedule) = _UpdateScheduleEvent;
-  const factory ScheduleEvent.updateLastUpdate(DateTime lastUpdate) = _UpdateLastUpdateEvent;
+  const factory ScheduleEvent.changeTarget(ScheduleTarget target) = _ChangeTargetEvent;
 }
 
 @freezed
@@ -37,39 +35,19 @@ sealed class ScheduleState with _$ScheduleState {
 class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
   ScheduleBloc(this._repository) : super(ScheduleState.progress()) {
     on<ScheduleEvent>(
-      (event, emit) => event.map(
-        init: (event) => _onInit(event, emit),
-        refresh: (event) => _onRefresh(event, emit),
-        updateSchedule: (event) => emit(state.copyWith(schedule: event.schedule)),
-        updateLastUpdate: (event) => emit(state.copyWith(lastUpdate: event.lastUpdate)),
-      ),
+      (event, emit) =>
+          event.map(refresh: (event) => _onRefresh(event, emit), changeTarget: (event) => _onChangeTarget(event, emit)),
     );
   }
 
   final IScheduleRepository _repository;
-  late final StreamSubscription<ScheduleResponse?> _scheduleSubscription;
-  late final StreamSubscription<DateTime?> _lastUpdateSubscription;
-
-  Future<void> _onInit(_InitEvent event, Emitter<ScheduleState> emit) async {
-    await _repository.init();
-    _scheduleSubscription = _repository.scheduleStream.listen(
-      (schedule) => schedule == null ? null : add(ScheduleEvent.updateSchedule(schedule)),
-    );
-    _lastUpdateSubscription = _repository.lastUpdateStream.listen(
-      (lastUpdate) => lastUpdate == null ? null : add(ScheduleEvent.updateLastUpdate(lastUpdate)),
-    );
-    if (state.schedule == null || state.lastUpdate == null) {
-      add(ScheduleEvent.refresh());
-    } else {
-      emit(ScheduleState.success(schedule: state.schedule!, lastUpdate: state.lastUpdate));
-    }
-  }
+  late ScheduleTarget _target;
 
   Future<void> _onRefresh(_RefreshEvent event, Emitter<ScheduleState> emit) async {
     emit(ScheduleState.progress(schedule: state.schedule, lastUpdate: state.lastUpdate));
     try {
-      await _repository.updateSchedule();
-      emit(ScheduleState.success(schedule: _repository.schedule!, lastUpdate: _repository.lastUpdate));
+      final res = await _repository.updateSchedule(_target);
+      emit(ScheduleState.success(schedule: res.$1, lastUpdate: res.$2));
     } on Object catch (e) {
       debugPrint(e.toString());
       emit(ScheduleState.error(error: e.toHandler(), schedule: state.schedule, lastUpdate: state.lastUpdate));
@@ -78,10 +56,15 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
     }
   }
 
-  @override
-  Future<void> close() {
-    _scheduleSubscription.cancel();
-    _lastUpdateSubscription.cancel();
-    return super.close();
+  Future<void> _onChangeTarget(_ChangeTargetEvent event, Emitter<ScheduleState> emit) async {
+    final newTarget = event.target;
+    _target = newTarget;
+    emit(ScheduleState.progress());
+    try {
+      final res = await _repository.fetchSchedule(_target);
+      emit(ScheduleState.success(schedule: res.$1, lastUpdate: res.$2));
+    } on Object catch (e) {
+      emit(ScheduleState.error(error: e.toHandler(), schedule: state.schedule, lastUpdate: state.lastUpdate));
+    }
   }
 }

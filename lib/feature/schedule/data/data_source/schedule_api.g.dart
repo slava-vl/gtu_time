@@ -21,7 +21,7 @@ class _ScheduleApi implements ScheduleApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ScheduleResponse> getGroupSchedule(dynamic group) async {
+  Future<ScheduleResponse> getGroupSchedule(String group) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -31,6 +31,33 @@ class _ScheduleApi implements ScheduleApi {
           .compose(
             _dio.options,
             'schedule?group=${group}&semester=1&week=0',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ScheduleResponse _value;
+    try {
+      _value = ScheduleResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ScheduleResponse> getTeacherSchedule(String teacher) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ScheduleResponse>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'schedule?teacher=${teacher}&semester=1&week=0',
             queryParameters: queryParameters,
             data: _data,
           )
